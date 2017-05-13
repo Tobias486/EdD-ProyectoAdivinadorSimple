@@ -3,7 +3,9 @@
  */
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 public class ElementIterator<E> implements Iterator<E> {
+    
     Position<E> cursor; // Cursor que indica la siguiente posición a devolver
     PositionList<E> lista; // Lista que se recorre
     
