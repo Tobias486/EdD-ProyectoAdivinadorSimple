@@ -24,7 +24,8 @@ public class Lista<E> implements PositionList<E> {
             throw new InvalidPositionException("The header node is not a valid position.");
         if(p == tail)
             throw new InvalidPositionException("The trailer node is not a valid position.");
-        try{
+        
+        try {
             NodoDoble<E> temp = (NodoDoble<E>) p;
             if((temp.getAnterior()) == null || temp.getSiguiente() == null)
                 throw new InvalidPositionException("Position does not belong to a valid PositionList");
