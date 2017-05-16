@@ -9,7 +9,7 @@
  * @param <E>
  */
 
-//La implementación hereda los JavaDoc, no reescribir
+//La implementaciÃ³n hereda los JavaDoc, no reescribir
 //Hacer JavaDoc para clases que no implementan JavaDoc, los contstructores de las que las implementan
 
 public class Pila<E> implements Stack<E> {
@@ -17,7 +17,10 @@ public class Pila<E> implements Stack<E> {
 	private Node<E> head; //Referencia al elemento en el tope de la pila
 	private int size; //Cantidad de elementos en la pila
 
-	//TODO: CONSTRUCTOR NO NECESARIO, LO AGREGO?
+	public Pila () {
+		head = null;
+		size = 0;
+	}
 
 	public int size () { 
 		return size; 
