@@ -14,7 +14,12 @@ public class ElementIterator<E> implements Iterator<E> {
     public ElementIterator(PositionList<E> l){
         lista = l;
         if (lista.isEmpty()) cursor = null;
-        else cursor = lista.first();
+        else {
+            try{ 
+                cursor = lista.first();
+            }
+            catch(EmptyListException e){}
+        }
     }
     
     // Consulta que returna verdadero si la lista no fue recorrida en su totalidad o falso en caso contrario
@@ -28,11 +33,15 @@ public class ElementIterator<E> implements Iterator<E> {
         if(cursor == null)
             throw new NoSuchElementException("No next element.");
         E devolver = cursor.element();
-        if(cursor == lista.last())
-            cursor = null;
-        else
-            cursor = lista.next(cursor);
-            
+        try {
+            if(cursor == lista.last())
+                cursor = null;
+            else
+                cursor = lista.next(cursor);
+        }
+        catch(InvalidPositionException e) {throw new NoSuchElementException("No next element.");}
+        catch(BoundaryViolationException e){throw new NoSuchElementException("No next element.");}
+        
         return devolver;
     }
 
