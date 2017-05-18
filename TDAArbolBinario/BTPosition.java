@@ -1,15 +1,17 @@
 package TDAArbolBinario;
-/**
- * Interfaz Position para TDAArbol
- * @author Tobías Molina Blanco, Teo Vogel
- *
- */
-public interface BTPosition<E> {
 
-	/**
-	 * Retorna el elemento que encapsula 
-	 * @return elemento encapsulado
-	 */
-	public E element ();
+public interface BTPosition<E> extends Position<E> {
+
+	public BTPosition<E> getParent();
+	
+	public BTPosition<E> getLeft();
+	
+	public BTPosition<E> getRight();
+	
+	public void setParent(BTPosition<E> parent); 
+
+	public void setLeft(BTPosition<E> left);
+
+	public void setRight(BTPosition<E> right);
 	
 }

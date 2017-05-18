@@ -33,7 +33,7 @@ public interface GTTree<E> extends Iterable<E>
 	 * Devuelve una colección iterable de las posiciones de los nodos del árbol.
 	 * @return Colección iterable de las posiciones de los nodos del árbol.
 	 */
-	public Iterable<BTPosition<E>> positions();
+	public Iterable<Position<E>> positions();
 	
 	/**
 	 * Reemplaza el elemento almacenado en la posición dada por el elemento pasado por parámetro. Devuelve el elemento reemplazado.
@@ -42,14 +42,14 @@ public interface GTTree<E> extends Iterable<E>
 	 * @return Elemento reemplazado.
 	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
 	 */
-	public E replace(BTPosition<E> v, E e) throws InvalidPositionException;
+	public E replace(Position<E> v, E e) throws InvalidPositionException;
 	
 	/**
 	 * Devuelve la posición de la raíz del árbol.
 	 * @return Posición de la raíz del árbol.
 	 * @throws EmptyTreeException si el árbol está vacío.
 	 */
-	public BTPosition<E> root() throws EmptyTreeException;
+	public Position<E> root() throws EmptyTreeException;
 	
 	/**
 	 * Devuelve la posición del nodo padre del nodo correspondiente a una posición dada.
@@ -58,7 +58,7 @@ public interface GTTree<E> extends Iterable<E>
 	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
 	 * @throws BoundaryViolationException si la posición pasada por parámetro corresponde a la raíz del árbol.
 	 */
-	public BTPosition<E> parent(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException;
+	public Position<E> parent(Position<E> v) throws InvalidPositionException, BoundaryViolationException;
 	
 	/**
 	 * Devuelve una colección iterable de los hijos del nodo correspondiente a una posición dada.
@@ -66,7 +66,7 @@ public interface GTTree<E> extends Iterable<E>
 	 * @return Colección iterable de los hijos del nodo correspondiente a la posición pasada por parámetro.
 	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
 	 */
-	public Iterable<BTPosition<E>> children(BTPosition<E> v) throws InvalidPositionException;
+	public Iterable<Position<E>> children(Position<E> v) throws InvalidPositionException;
 	
 	/**
 	 * Consulta si una posición corresponde a un nodo interno.
@@ -74,7 +74,7 @@ public interface GTTree<E> extends Iterable<E>
 	 * @return Verdadero si la posición pasada por parámetro corresponde a un nodo interno, falso en caso contrario.
 	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
 	 */
-	public boolean isInternal(BTPosition<E> v) throws InvalidPositionException;
+	public boolean isInternal(Position<E> v) throws InvalidPositionException;
 	
 	/**
 	 * Consulta si una posición dada corresponde a un nodo externo.
@@ -82,7 +82,7 @@ public interface GTTree<E> extends Iterable<E>
 	 * @return Verdadero si la posición pasada por parámetro corresponde a un nodo externo, falso en caso contrario.
 	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
 	 */
-	public boolean isExternal(BTPosition<E> v) throws InvalidPositionException;
+	public boolean isExternal(Position<E> v) throws InvalidPositionException;
 	
 	/**
 	 * Consulta si una posición dada corresponde a la raíz del árbol.
@@ -90,7 +90,7 @@ public interface GTTree<E> extends Iterable<E>
 	 * @return Verdadero, si la posición pasada por parámetro corresponde a la raíz del árbol,falso en caso contrario.
 	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
 	 */
-	public boolean isRoot(BTPosition<E> v) throws InvalidPositionException;
+	public boolean isRoot(Position<E> v) throws InvalidPositionException;
 	
 
 }
