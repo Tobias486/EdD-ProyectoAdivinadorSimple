@@ -1,0 +1,98 @@
+package TDAArbolBinario;
+
+/**
+ * Interface BinaryTree
+ * Exstiende la interfaz GTTree, presentada por Goodrich y Tamassia en su
+ * cuarta edición (la interfaz para árbol que no incluye operaciones de modificación).
+ * @author Cátedra de Estructuras de Datos, Departamento de Cs. e Ing. de la Computación, UNS.
+ */
+
+public interface BinaryTree<E> extends GTTree<E> {
+	/**
+	 * Devuelve la posición del hijo izquierdo de v.
+	 * @param v Posición de un nodo.
+	 * @return Posición del hijo izquierdo de v.
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
+	 * @throws BoundaryViolationException si v no tiene hijo izquierdo.
+	 */
+	public BTPosition<E> left(BTPosition<E> v) throws InvalidPositionException, BoundaryViolationException;
+	
+	/**
+	 * Devuelve la posición del hijo derecho de v.
+	 * @param v Posición de un nodo.
+	 * @return Posición del hijo derecho de v.
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.
+	 * @throws BoundaryViolationException si v no tiene hijo derecho.
+	 */
+	public BTPosition<E> right(BTPosition<E> v)throws InvalidPositionException, BoundaryViolationException;
+
+	/**
+	 * Testea si v tiene un hijo izquierdo.
+	 * @param v Posición de un nodo.
+	 * @return Verdadero si v tiene un hijo izquierdo y falso en caso contrario.
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.	
+	 */
+	public boolean hasLeft(BTPosition<E> v) throws InvalidPositionException;
+	
+	
+	/**
+	 * Testea si v tiene un hijo derecho.
+	 * @param v Posición de un nodo.
+	 * @return Verdadero si v tiene un hijo derecho y falso en caso contrario.
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida.	
+	 */
+	public boolean hasRight(BTPosition<E> v) throws InvalidPositionException;
+	
+	/**
+	 * Crea un nodo con rótulo e como raíz del árbol.
+	 * @param E Rótulo que se asignará a la raíz del árbol.
+	 * @throws InvalidOperationException si el árbol ya tiene un nodo raíz.
+	 */
+	public BTPosition<E> createRoot(E r) throws InvalidOperationException;
+	
+	
+	/**
+	 * Agrega un nodo con rótulo r como hijo izquierdo de un nodo dado.
+	 * @param r Rótulo del nuevo nodo.
+	 * @param v Posición del nodo padre.
+	 * @return La posición del nuevo nodo creado.
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida o el árbol está vacío.
+	 * @throws InvalidOperationException si v ya tiene un hijo izquierdo.
+	 */
+	public BTPosition<E> addLeft(BTPosition<E> v, E r) throws InvalidOperationException; InvalidPositionException;
+
+
+	/**
+	 * Agrega un nodo con rótulo r como hijo derecho de un nodo dado.
+	 * @param r Rótulo del nuevo nodo.
+	 * @param v Posición del nodo padre.
+	 * @return La posición del nuevo nodo creado.
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida o el árbol está vacío.
+	 * @throws InvalidOperationException si v ya tiene un hijo derecho.
+	 */
+	public BTPosition<E> addRight(BTPosition<E> v, E r) throws InvalidOperationException; 
+										InvalidPositionException;
+
+
+	/**
+	 * Elimina el nodo referenciado por una posición dada. Si el nodo tiene un único hijo, el nodo eliminado será reemplazado por su único hijo.
+	 * @param v Posición del nodo a eliminar.
+	 * @return el rótulo del nodo eliminado.
+     * @throws InvalidPositionException si la posición pasada por parámetro es inválida o el árbol está vacío.
+	 * @throws InvalidOperationException si el nodo a eliminar tiene mas de un hijo.
+     */
+	public E remove(BTPosition<E> v) throws InvalidOperationException; InvalidPositionException;
+
+	/**
+	 * Inserta a los árboles T1 y T2 como subárboles hijos de la hoja v (izquierdo y derecho respectivamente).
+	 * @param v Posición de una hoja del árbol.
+	 * @param T1 árbol binario a insertar como hijo izquierdo de v.
+	 * @param T2 árbol binario a insertar como hijo derecho de v. 
+	 * @throws InvalidPositionException si la posición pasada por parámetro es inválida o el árbol está vacío, o v no corresponde a una hoja.
+	 */
+	//Pone a T1 y a T2 como subárboles de la hoja v, izquierdo y derecho respectivamente, si v no era hoja da InvalidPositionException.
+	  public void Attach(BTPosition<E> r, BinaryTree<E> T1, BinaryTree<E> T2) throws InvalidPositionException;
+	}
+
+	
+}
