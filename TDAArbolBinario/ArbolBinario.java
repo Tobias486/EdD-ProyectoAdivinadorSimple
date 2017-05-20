@@ -1,5 +1,7 @@
 package TDAArbolBinario;
 
+// TODO: por qué usamos BTPosition??? Los tipos estáticos en ArbolBinario deben ser BTPosition o BTNodo?
+
 public class ArbolBinario<E> implements BinaryTree<E> {
 
 	private BTNodo<E> root;
@@ -64,9 +66,22 @@ public class ArbolBinario<E> implements BinaryTree<E> {
 		return result;
 	}
 	
-	public E remove (Position<E>) throws InvalidOperationException, InvalidPositionException {
+	public E remove (Position<E> p) throws InvalidOperationException, InvalidPositionException {
 		BTNodo<E> aux = checkPosition(p);
-		if (aux.getLeft() != null && aux)
+		E result = aux.element();
+		if (aux.getLeft() != null && aux.getRight() != null)
+			throw new InvalidOperationException();
+		
+		BTPosition<E> padre = aux.getParent();
+		BTPosition<E> hijo = aux.getLeft() != null ? aux.getLeft() : aux.getRight();
+		
+		if (padre.getLeft() == aux)
+			padre.setLeft(hijo);
+		else
+			padre.setRight(hijo);
+		hijo.setParent(padre);
+		
+		return result;
 	}
 	
 }
