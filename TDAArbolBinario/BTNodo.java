@@ -1,7 +1,7 @@
 package TDAArbolBinario;
 
 /**
- * Clase que implementa la interfaz Position de Arbol Binaro
+ * Clase que implementa la interfaz BTPosition de Arbol Binaro
  * @author Tobías Molina Blanco, Teo Vogel
  * @param <E>
  */
