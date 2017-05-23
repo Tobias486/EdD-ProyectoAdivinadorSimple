@@ -2,7 +2,7 @@ package TDAArbolBinario;
 
 /**
  * Clase que implementa la interfaz BTPosition de Arbol Binaro
- * @author Tobías Molina Blanco, Teo Vogel
+ * @author TobÃ­as Molina Blanco, Teo Vogel
  * @param <E>
  */
 
@@ -16,6 +16,13 @@ public class BTNodo<E> implements BTPosition<E> {
 		this.parent = parent;
 		this.left = left;
 		this.right = right;
+	}
+	
+	public BTNodo(E elem, BTPosition<E> padre){
+		this.elem = elem;
+		this.parent = padre;
+		this.left = null;
+		this.right = null;
 	}
 	
 	public BTNodo (E elem) {
