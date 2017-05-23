@@ -153,26 +153,21 @@ public class GUI {
 				
 				
 				switch (estado) {
-				case(0): 
-					if (resuestaPorSiNo)
-						if (logica.haySiguientePregunta()) { //no estoy en una hoja
-							preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
-							try {
-								logica.siguientePregunta(respuesta);
-							} catch (BoundaryViolationException ex) {
-								ex.printStackTrace();
-							}
-						} else  { //estoy en una hoja
-							preguntaLabel.setText("El instrumento es " + logica.preguntaActual() + "?");						
+				case(0): //no estoy en una hoja
+					if (resuestaPorSiNo) {
+						try {
+							logica.siguientePregunta(respuesta);
+						} catch (BoundaryViolationException ex) {ex.printStackTrace();}
+						preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
+						if (!logica.haySiguientePregunta()) //pasé a una hoja
 							estado = 1;
-						}
+					}
 					break;
-				case(1): 
+				case(1): //estoy en una hoja
 					if (resuestaPorSiNo) {
 						if (respuesta) { //adiviné
 							JOptionPane.showMessageDialog(null, "Adiviné!");
 							estado = 0; //reinciando lógica e interfaz
-							estado = 0;
 							logica.reiniciar();
 							String text;
 							if (logica.haySiguientePregunta()) {
