@@ -9,7 +9,11 @@ import javax.swing.JPanel;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import TDAArbolBinario.BoundaryViolationException;
+
 import java.awt.Font;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
@@ -23,7 +27,17 @@ public class GUI {
 	private JFrame frame;
 	private JTextField textFieldPrincipal;
 	private JTextField textFieldEliminar;
-
+	
+	/*private boolean esperandoRespuestaFinal = false;
+	private boolean esperandoNuevoInstrumento = false;
+	private boolean esperandoDiferencia = false;*/
+	
+	private LogicaAdivinador logica;
+	
+	private int estado = 0; //0: preguntando; 1: adivinando; 2: pidiendo nuevo objeto; 3: pidiendo diferencia
+	private String nuevoInstrumento;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -51,6 +65,9 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		logica = new LogicaAdivinador();
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,10 +85,19 @@ public class GUI {
 		panelPrincipal.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new GridLayout(2, 0, 0, 0));
 		
-		JLabel lblNewLabel = new JLabel("Piensa en un instrumento");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblNewLabel);
+		JLabel preguntaLabel = new JLabel("Piensa en un instrumento");
+		preguntaLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		preguntaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(preguntaLabel);
+		String text;
+		if (logica.haySiguientePregunta()) {
+			text = "El instrumento " + logica.preguntaActual() + "?";
+		} else {
+			text = "El instrumento es " + logica.preguntaActual() + "?";
+			estado = 1;
+		}
+		preguntaLabel.setText(text);
+		
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
@@ -107,6 +133,115 @@ public class GUI {
 		textFieldPrincipal = new JTextField();
 		panel_1.add(textFieldPrincipal);
 		textFieldPrincipal.setColumns(30);
+		textFieldPrincipal.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String input = textFieldPrincipal.getText();
+				textFieldPrincipal.setText("");
+
+				boolean resuestaPorSiNo = false;
+				boolean respuesta = false;
+				if (input.toLowerCase().equals("si")) {
+					respuesta = true;
+					resuestaPorSiNo = true;
+				}
+				if (input.toLowerCase().equals("no")) {
+					respuesta = false;
+					resuestaPorSiNo = true;
+				}
+				
+				
+				switch (estado) {
+				case(0): 
+					if (resuestaPorSiNo)
+						if (logica.haySiguientePregunta()) { //no estoy en una hoja
+							preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
+							try {
+								logica.siguientePregunta(respuesta);
+							} catch (BoundaryViolationException ex) {
+								ex.printStackTrace();
+							}
+						} else  { //estoy en una hoja
+							preguntaLabel.setText("El instrumento es " + logica.preguntaActual() + "?");						
+							estado = 1;
+						}
+					break;
+				case(1): 
+					if (resuestaPorSiNo) {
+						if (respuesta) { //adiviné
+							JOptionPane.showMessageDialog(null, "Adiviné!");
+							estado = 0; //reinciando lógica e interfaz
+							estado = 0;
+							logica.reiniciar();
+							String text;
+							if (logica.haySiguientePregunta()) {
+								text = "El instrumento " + logica.preguntaActual() + "?";
+							} else {
+								text = "El instrumento es " + logica.preguntaActual() + "?";
+								estado = 1;
+							}
+							preguntaLabel.setText(text);
+						} else { //no adiviné, en qué elemento pensabas?
+							preguntaLabel.setText("En qué instrumento estabas pensando?");
+							estado = 2;
+						}
+					}
+					break;
+				case (2): 
+					preguntaLabel.setText("Y cual es la diferencia entre " + 
+							input + " y " + logica.preguntaActual() + "?");
+					nuevoInstrumento = input;
+					estado = 3;
+					break;
+				case (3): 
+					logica.agregarObjeto(nuevoInstrumento, input);
+					JOptionPane.showMessageDialog(null, "Jugá de nuevo!"); //reinciando lógica e interfaz
+					estado = 0;
+					logica.reiniciar();
+					String text;
+					if (logica.haySiguientePregunta()) {
+						text = "El instrumento " + logica.preguntaActual() + "?";
+					} else {
+						text = "El instrumento es " + logica.preguntaActual() + "?";
+						estado = 1;
+					}
+					preguntaLabel.setText(text);
+					break;				
+				}
+				
+				/*
+				if (!esperandoRespuestaFinal && resuestaPorSiNo) {
+					if (logica.haySiguientePregunta()) { //no estoy en una hoja
+						preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
+						logica.setSiguientePregunta(respuesta);
+					} else  { //estoy en una hoja
+						preguntaLabel.setText("El instrumento es un/una " + logica.preguntaActual() + "?");						
+						esperandoRespuestaFinal = true;
+					}
+				} else if (esperandoRespuestaFinal && resuestaPorSiNo) {
+					esperandoRespuestaFinal = false;
+					if (respuesta) { //adiviné
+						JOptionPane.showMessageDialog(null, "Adiviné!");
+						//TODO reiniciar interfaz
+					} else { //no adiviné, en qué elemento pensabas?
+						preguntaLabel.setText("En qué instrumento estabas pensando?");
+						esperandoNuevoInstrumento = true;
+					}
+				} else if (esperandoNuevoInstrumento) {
+					esperandoNuevoInstrumento = false;
+					preguntaLabel.setText("Y cual es la diferencia entre un/una " + 
+							respuesta +" y un/una " + logica.preguntaActual() + "?");
+					nuevoElemento = respuesta;
+					esperandoDiferencia = true;
+				} else if (esperandoDiferencia) {
+					esperandoDiferencia = false;
+					logica.agregarObjeto(nuevoInstrumento, respuesta);
+					//TODO reiniciar interfaz
+				}*/
+				
+			}
+		});
 		
 		
 		/*
@@ -156,13 +291,43 @@ public class GUI {
 		
 		JButton infoDescripcionObjetosButton = new JButton("Descripción de los objetos");
 		panel_2.add(infoDescripcionObjetosButton);
+		infoDescripcionObjetosButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/*String info = "";
+				for (String s : logica.generarDescripciones())
+					info = info + s + "\n"; 
+				JOptionPane.showMessageDialog(null, info);*/
+			}
+		});
 		
 		JButton infoArbolButton = new JButton("Información sobre el árbol");
 		panel_2.add(infoArbolButton);
+		infoArbolButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/*String info = "";
+				for (String s : logica.generarInformacion())
+					info = info + s + "\n"; 
+				JOptionPane.showMessageDialog(null, info);*/
+			}
+		});
 		
 		JButton infoMostrarNodosButton = new JButton("Mostrar nodos");
 		panel_2.add(infoMostrarNodosButton);
-
+		infoMostrarNodosButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				/*String info = "";
+				for (String s : logica.mostrarNodosInternos())
+					info = info + s + "\n"; 
+				JOptionPane.showMessageDialog(null, info);*/
+			}
+		});
+		
 		
 		/*
 		 * PANEL ELIMINAR

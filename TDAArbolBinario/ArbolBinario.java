@@ -1,5 +1,7 @@
 package TDAArbolBinario;
 
+import java.util.Iterator;
+
 // TODO: por qué usamos BTPosition??? Los tipos estáticos en ArbolBinario deben ser BTPosition o BTNodo?
 
 public class ArbolBinario<E> implements BinaryTree<E> {

@@ -1,3 +1,5 @@
+package TDAPila;
+
 
 /**
  * Excepción lanzada cuando la pila está vacía.

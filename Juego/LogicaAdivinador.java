@@ -1,3 +1,7 @@
+package Juego;
+
+import TDAArbolBinario.*;
+
 public class LogicaAdivinador {
     BinaryTree<String> arbol;
     Position<String> pp;

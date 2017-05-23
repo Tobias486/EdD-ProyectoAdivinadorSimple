@@ -1,5 +1,9 @@
+package TDAArbolBinario;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import TDAPila.*;
 
 public class BTIterator<E> implements Iterator<E> {
     Stack<Position<E>> p;

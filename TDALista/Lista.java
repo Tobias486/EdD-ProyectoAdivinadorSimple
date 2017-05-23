@@ -1,7 +1,10 @@
+package TDALista;
+
 /*
  * Estructura iterable de una lista doblemente enlazada que implementa la interfaz PositionList
  */
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 public class Lista<E> implements PositionList<E> {
 
     private int longitud; // Atributo que lleva la cuenta de la cantidad de elementos en la lista
@@ -127,16 +130,20 @@ public class Lista<E> implements PositionList<E> {
     public Iterable<Position<E>> positions(){
         Lista<Position<E>> listaP= new Lista<Position<E>>();
         Position<E> meter = head;
+        try{
+	        int tam = 0;
+	        if(!isEmpty()) {
+	            meter = first();
+	            listaP.addLast(meter);
+	            for(int i = 1; i < size(); i++) {
+	                meter = next(meter);
+	                listaP.addLast(meter);
+	            }
+	        }
+        } catch(EmptyListException e){}
+        catch(BoundaryViolationException e){}
+        catch(InvalidPositionException e){}
         
-        int tam = 0;
-        if(!isEmpty()) {
-            meter = first();
-            listaP.addLast(meter);
-            for(int i = 1; i < size(); i++) {
-                meter = next(meter);
-                listaP.addLast(meter);
-            }
-        }
         return listaP;
     }
     
