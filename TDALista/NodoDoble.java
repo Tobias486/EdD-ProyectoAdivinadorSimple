@@ -1,3 +1,5 @@
+package TDALista;
+
 /*
  * Nodo que contiene un elemento genérico y mantiene referencias hacia un nodo previo y otro sucesor.
  */

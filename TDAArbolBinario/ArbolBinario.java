@@ -1,8 +1,9 @@
 package TDAArbolBinario;
 
 import java.util.Iterator;
+import TDALista.*;
 
-// TODO: por qu√© usamos BTPosition??? Los tipos est√°ticos en ArbolBinario deben ser BTPosition o BTNodo?
+// TODO: por quÈ usamos BTPosition??? Los tipos est·ticos en ArbolBinario deben ser BTPosition o BTNodo?
 
 public class ArbolBinario<E> implements BinaryTree<E> {
 

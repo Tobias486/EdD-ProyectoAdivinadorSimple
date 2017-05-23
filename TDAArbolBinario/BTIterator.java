@@ -39,7 +39,9 @@ public class BTIterator<E> implements Iterator<E> {
         E devolver;
         devolver = cursor.element();
         pushChildren();
-        cursor = p.pop();
+        try {
+			cursor = p.pop();
+		} catch (EmptyStackException e) {throw new NoSuchElementException("No next element");}
         return devolver;
     }
 }

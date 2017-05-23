@@ -1,3 +1,5 @@
+package TDALista;
+
 /*
  * Iterador que implementa la interfaz Iterator que se encarga de recorrer una lista
  */
@@ -41,6 +43,7 @@ public class ElementIterator<E> implements Iterator<E> {
         }
         catch(InvalidPositionException e) {throw new NoSuchElementException("No next element.");}
         catch(BoundaryViolationException e){throw new NoSuchElementException("No next element.");}
+        catch(EmptyListException e){throw new NoSuchElementException("No next element.");}
         
         return devolver;
     }
