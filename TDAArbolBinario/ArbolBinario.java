@@ -126,54 +126,81 @@ public class ArbolBinario<E> implements BinaryTree<E> {
 		return ver.getRight();
 	}
 
-	public void Attach(Position<E> v, BinaryTree<E> T1, BinaryTree<E> T2) throws InvalidPositionException {
-		BTNodo<E> ver = checkPosition(v);
-		BTNodo<E> meter;
-		try {
-			if(!isExternal(ver))
-				throw new InvalidPositionException();
-			if(!T1.isEmpty()){
-				ver.setLeft((BTNodo<E>) T1.root());
-				meter = (BTNodo<E>) T1.root(); meter.setParent(ver);
-			}
-			if(!T2.isEmpty()){
-				ver.setRight((BTNodo<E>) T2.root());
-				meter = (BTNodo<E>) T2.root(); meter.setParent(ver);
-			}
-		} 
-		catch(ClassCastException e) {throw new InvalidPositionException();}
-		catch(EmptyTreeException e){};
-		size+= T1.size() + T2.size();
-	}
-	
-	public Iterator<E> iterator(){
-		return new BTIterator<E>(this);
-	}
-
-	private void DFS(Position<E> v, Lista<Position<E>> a) throws InvalidPositionException{
-		a.addLast(v);
-		try{
-			if(hasLeft(v)) DFS(right(v),a);
-			if(hasRight(v)) DFS(left(v),a);
-	  	}
-		catch(BoundaryViolationException e){}
-	}
-
-	public Iterable<Position<E>> children(Position<E> v)throws InvalidPositionException{
-		BTNodo poner = checkPosition(v);
-		Lista<Position<E>> a = new Lista<Position<E>>();
-		a.addLast(poner);
-		DFS(v,a);
-		return a;
-	}
-	public Iterable<Position<E>> positions(){
-		Lista<Position<E>> list = new Lista<Position<E>>();
-		Position<E> a;
-		try{if(!isEmpty()){ a = root(); DFS(a,list);}}
-		catch(EmptyTreeException e) {}
-		catch(InvalidPositionException e){}
-
-		return list;
-	}  
-	
+	private BTPosition<E> clonePosition(BTPosition<E> p){
+        return new BTNodo<E>(p.element());
+    }
+    
+    private BTPosition<E> cloneSubtree(BTPosition<E> raiz, BinaryTree<E> T)throws InvalidPositionException{
+        BTPosition<E> clon = clonePosition(raiz);
+        try {
+            if(T.hasLeft(raiz)) {
+                clon.setLeft(cloneSubtree(checkPosition(T.left(raiz)),T));
+                clon.getLeft().setParent(clon);
+            }
+            if(T.hasRight(raiz)){
+                clon.setRight(cloneSubtree(checkPosition(T.right(raiz)),T));
+                clon.getRight().setParent(clon);
+            }
+        }
+        catch(BoundaryViolationException e){}
+        return clon;
+    }
+    
+    public void Attach(Position<E> v, BinaryTree<E> T1, BinaryTree<E> T2) throws InvalidPositionException {
+          BTPosition<E> ver = checkPosition(v);
+          BTPosition<E> meter;
+          
+          try {
+          if(!isExternal(ver))
+               throw new InvalidPositionException();
+          if(!T1.isEmpty()){
+               meter = cloneSubtree(checkPosition(T1.root()),T1);
+               ver.setLeft(meter);
+               meter.setParent(ver);
+          }
+          if(!T2.isEmpty()){
+               meter = cloneSubtree(checkPosition(T2.root()),T2); 
+               ver.setRight(meter);
+               meter.setParent(ver);
+          }
+       } 
+       catch(ClassCastException e) {throw new InvalidPositionException();}
+       catch(EmptyTreeException e){}
+       size+= T1.size() + T2.size();
+    }
+    public Iterator<E> iterator(){
+        return new BTIterator<E>(this);
+    }
+    
+    private void DFS(Position<E> v, Lista<Position<E>> a) throws InvalidPositionException{
+        a.addLast(v);
+        try{
+           if(hasLeft(v)) DFS(left(v),a);
+           if(hasRight(v)) DFS(right(v),a);
+       }
+        catch(BoundaryViolationException e){}
+    }
+    
+    public Iterable<Position<E>> children(Position<E> v)throws InvalidPositionException{
+       BTNodo poner = checkPosition(v);
+       Lista<Position<E>> a = new Lista<Position<E>>();
+       a.addLast(poner);
+       DFS(v,a);
+       
+       return a;
+    }
+    public Iterable<Position<E>> positions(){
+       Lista<Position<E>> list = new Lista<Position<E>>();
+       Position<E> a;
+       try{
+           if(!isEmpty()){
+               a = root(); 
+               DFS(a,list);
+            }
+        }
+       catch(EmptyTreeException e) {}
+       catch(InvalidPositionException e){}
+       
+       return list;
+    }  
 }
