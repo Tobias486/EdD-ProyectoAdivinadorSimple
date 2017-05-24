@@ -9,10 +9,10 @@ public class LogicaAdivinador {
     public LogicaAdivinador(){
         arbol = new ArbolBinario<String>();
         try {
-            pp = arbol.createRoot("una guitarra");
-            //pp = arbol.root();
+            arbol.createRoot("una guitarra");
+            pp = arbol.root();
         } catch (InvalidOperationException e){}
-        //catch(EmptyTreeException e){System.out.println("eeee");}
+        catch(EmptyTreeException e){}
     }
     
     public void siguientePregunta(boolean resp) throws BoundaryViolationException{
@@ -49,10 +49,10 @@ public class LogicaAdivinador {
         String pregunta = "";
         try {
             if(arbol.isInternal(pp)){
-                pregunta +=  "¿"+pp.element()+"?";
+                pregunta +=  "Â¿"+pp.element()+"?";
             }
             else {
-                pregunta += "Estás pensando en "+pp.element()+"?"; 
+                pregunta += "EstÃ¡s pensando en "+pp.element()+"?"; 
             }
         }
         catch(InvalidPositionException e){}
