@@ -9,10 +9,10 @@ public class LogicaAdivinador {
     public LogicaAdivinador(){
         arbol = new ArbolBinario<String>();
         try {
-            arbol.createRoot("una guitarra");
-            pp = arbol.root();
+            pp = arbol.createRoot("una guitarra");
+            // pp = arbol.root();
         } catch (InvalidOperationException e){}
-        catch(EmptyTreeException e){}
+        //catch(EmptyTreeException e){}
     }
     
     public void siguientePregunta(boolean resp) throws BoundaryViolationException{
