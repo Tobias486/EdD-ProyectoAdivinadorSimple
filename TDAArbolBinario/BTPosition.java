@@ -10,19 +10,19 @@ package TDAArbolBinario;
 public interface BTPosition<E> extends Position<E> {
 
 	/**
-	 * Devuelve el padre de la posición
+	 * Consulta el padre de la posición
 	 * @return el padre de la posición
 	 */
 	public BTPosition<E> getParent();
 	
 	/**
-	 * Devuelve el hijo izquierdo de la posición
+	 * Consulta el hijo izquierdo de la posición
 	 * @return el hijo izquierdo de la posición
 	 */
 	public BTPosition<E> getLeft();
 	
 	/**
-	 * Devuelve el hijo derecho de la posición
+	 * Consulta el hijo derecho de la posición
 	 * @return el hijo derecho de la posición
 	 */
 	public BTPosition<E> getRight();

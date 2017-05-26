@@ -7,7 +7,10 @@ package TDAArbolBinario;
  */
 
 public class BoundaryViolationException extends Exception { 
-    
+
+	/**
+	 * Constructor vacío
+	 */
 	public BoundaryViolationException() {
         super();
     }

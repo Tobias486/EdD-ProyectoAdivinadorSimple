@@ -2,14 +2,26 @@ package TDAArbolBinario;
 
 import java.util.Iterator;
 import TDALista.*;
+import TDALista.InvalidPositionException;
 
-// TODO: por qué usamos BTPosition??? Los tipos estáticos en ArbolBinario deben ser BTPosition o BTNodo?
+// TODO: cambiar todos los tipos estáticos del TDA por BTNodo o BTPosition (checkPosition debe retornar el tipo idéntico)
+// TODO: comentar los métodos privados restantes (luego les doy forma de JavaDoc)
+
+/**
+ * Estructura iterable de un árbol que implementa la interfaz BinaryTree
+ * @author Tobías Molina Blanco, Teo Vogel
+ *
+ * @param <E>
+ */
 
 public class ArbolBinario<E> implements BinaryTree<E> {
 
-	private BTNodo<E> root;
-	private int size;
+	private BTNodo<E> root; //referencia a la raíz del árbol
+	private int size; //cantidad de nodos del árbol
 	
+	/**
+	 * Constructor vacío
+	 */
 	public ArbolBinario () {
 		root = null;
 		size = 0;
@@ -47,8 +59,14 @@ public class ArbolBinario<E> implements BinaryTree<E> {
 		return aux == root;
 	}
 	
+    /**
+     * Verifica que la posición pasada por prámetro no sea nula y del tipo correcto (además de verificar que el árbol no esté vacío)
+     * @param p, posición a verificar
+     * @return el nodo al cual apuntaba la posición
+     * @throws InvalidPositionException si la posición no cumple con las mencionadas condiciones
+     */
 	private BTNodo<E> checkPosition(Position<E> p) throws InvalidPositionException {
-		if (p == null) //TODO: chequear lista vacÃ­a?
+		if (p == null && !isEmpty())
 			throw new InvalidPositionException();
 		try {
 			return (BTNodo<E>) p;

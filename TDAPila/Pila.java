@@ -1,24 +1,20 @@
 package TDAPila;
 
-//TODO !!!! USAR LAS INTERFACES PROVISTAS!
-
-//Ejemplo de JavaDoc para interfaz:
-
 /**
- * Interfaz de Pila
+ * Implementación de la interfaz Stack
  * @author Teo Vogel
  *
  * @param <E>
  */
 
-//La implementaciÃ³n hereda los JavaDoc, no reescribir
-//Hacer JavaDoc para clases que no implementan JavaDoc, los contstructores de las que las implementan
-
 public class Pila<E> implements Stack<E> {
 
-	private Node<E> head; //Referencia al elemento en el tope de la pila
+	private Nodo<E> head; //Referencia al elemento en el tope de la pila
 	private int size; //Cantidad de elementos en la pila
 
+	/**
+	 * Constructor vacío
+	 */
 	public Pila () {
 		head = null;
 		size = 0;
@@ -48,7 +44,7 @@ public class Pila<E> implements Stack<E> {
 	}
 
 	public void push (E elem) {
-		Node<E> nuevo = new Node<E>(elem, head);
+		Nodo<E> nuevo = new Nodo<E>(elem, head);
 		head = nuevo;
 		size++;
 	}

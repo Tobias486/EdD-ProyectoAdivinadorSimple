@@ -1,10 +1,13 @@
 package TDALista;
-
-/*
- * Iterador que implementa la interfaz Iterator que se encarga de recorrer una lista
- */
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+/**
+ * Iterador que implementa la interfaz Iterator que se encarga de recorrer una lista
+ * @author Tobías Molina Blanco
+ *
+ * @param <E>
+ */
 
 public class ElementIterator<E> implements Iterator<E> {
     
@@ -12,7 +15,10 @@ public class ElementIterator<E> implements Iterator<E> {
     PositionList<E> lista; // Lista que se recorre
     
     
-    // Constructor que recibe la lista a recorrer.
+    /**
+     * Constructor que recibe la lista a recorrer.
+     * @param l lista a recorrer
+     */
     public ElementIterator(PositionList<E> l){
         lista = l;
         if (lista.isEmpty()) cursor = null;
@@ -24,13 +30,19 @@ public class ElementIterator<E> implements Iterator<E> {
         }
     }
     
-    // Consulta que returna verdadero si la lista no fue recorrida en su totalidad o falso en caso contrario
+    /**
+     * Consulta si la lista fue recorrida en su totalidad
+     * @return verdadero si la lista no fue recorrida en su totalidad, falso en caso contrario
+     */
     public boolean hasNext(){
         return (cursor != null);
     }
     
-    // Consulta que devuelve el siguiente elemento en la lista
-    // Lanza una excepciÃ³n de tipo NoSuchElementException si no quedan elementos que devolver
+    /**
+     * Consulta el siguiente elemento en la lista
+     * @return el siguiente elemento en la lista
+     * @throws NoSuchElementException si no quedan elementos que devolver
+     */
     public E next() throws NoSuchElementException{
         if(cursor == null)
             throw new NoSuchElementException("No next element.");

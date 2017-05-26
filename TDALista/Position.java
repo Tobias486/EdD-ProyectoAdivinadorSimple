@@ -1,6 +1,16 @@
 package TDALista;
 
-// Interfaz para una posiciÃ³nde una lista
+/**
+ * Interfaz para una posición de una lista
+ * @author Tobías Molina Blanco
+ *
+ * @param <E>
+ */
 public interface Position<E> {
-    public E element(); // Devuelve el elemento que contiene la posiciÃ³n
+	
+	/**
+	 * Consulta el elemento encapsulado en la posición
+	 * @return el elemento encapsulado en la posición
+	 */
+    public E element();
 }

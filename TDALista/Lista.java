@@ -1,16 +1,23 @@
 package TDALista;
-
-/*
- * Estructura iterable de una lista doblemente enlazada que implementa la interfaz PositionList
- */
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+/**
+ * Estructura iterable de una lista que implementa la interfaz PositionList
+ * @author Tobías Molina Blanco
+ *
+ * @param <E>
+ */
+
 public class Lista<E> implements PositionList<E> {
 
     private int longitud; // Atributo que lleva la cuenta de la cantidad de elementos en la lista
     private NodoDoble<E> head; // Nodo centinela al principio de la lista
     private NodoDoble<E> tail; // Nodo centinela al final de la lista
 
+    /**
+     * Constructor vacío
+     */
     public Lista(){
         longitud = 0;
         head = new NodoDoble<E>();
@@ -20,6 +27,12 @@ public class Lista<E> implements PositionList<E> {
         tail.setAnterior(head);
     }
 
+    /**
+     * Verifica que la posición pasada por prámetro no sea nula, diferente a los centinelas y de tipo NodoDoble (además de verificar que la lista no esté vacía)
+     * @param p, posición a verificar
+     * @return el nodo al cual apuntaba la posición
+     * @throws InvalidPositionException si la posición no cumple con las mencionadas condiciones
+     */
     protected NodoDoble<E> checkPosition(Position<E> p) throws InvalidPositionException{
         if(p == null || isEmpty())
             throw new InvalidPositionException("Invalid position.");

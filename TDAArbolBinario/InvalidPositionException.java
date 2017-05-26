@@ -8,6 +8,9 @@ package TDAArbolBinario;
 
 public class InvalidPositionException extends Exception {
 
+	/**
+	 * Constructor vacío
+	 */
 	public InvalidPositionException () {
 		super();
 	}
