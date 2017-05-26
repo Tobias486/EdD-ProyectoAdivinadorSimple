@@ -159,8 +159,10 @@ public class GUI {
 							logica.siguientePregunta(respuesta);
 						} catch (BoundaryViolationException ex) {ex.printStackTrace();}
 						preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
-						if (!logica.haySiguientePregunta()) //pasé a una hoja
+						if (!logica.haySiguientePregunta()) { //pasé a una hoja
 							estado = 1;
+							preguntaLabel.setText("El instrumento es " + logica.preguntaActual() + "?");
+						}
 					}
 					break;
 				case(1): //estoy en una hoja

@@ -1,8 +1,7 @@
 package TDAArbolBinario;
 
 import java.util.Iterator;
-import TDALista.*;
-import TDALista.InvalidPositionException;
+import TDALista.Lista;
 
 // TODO: cambiar todos los tipos estáticos del TDA por BTNodo o BTPosition (checkPosition debe retornar el tipo idéntico)
 // TODO: comentar los métodos privados restantes (luego les doy forma de JavaDoc)
