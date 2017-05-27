@@ -2,6 +2,19 @@ package Juego;
 
 import TDAArbolBinario.*;
 
+/*USANDO LOS QUICKFIXES DE ECLIPSE SE IMPORTARON LAS SIGUIENTES COSAS, SIN EMBARGO, NO SÉ COMO SE IMPORTA DE MANERA MÁS COMPRIMIDA
+PERO CREO QUE VOS SÍ
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import TDAArbolBinario.*;
+import TDAArbolBinario.BoundaryViolationException;
+import TDAArbolBinario.InvalidPositionException;
+import TDAArbolBinario.Position;
+import TDAPila.Pila;
+import TDAPila.Stack;
+*/
+
 public class LogicaAdivinador {
     BinaryTree<String> arbol;
     Position<String> pp;
