@@ -27,14 +27,17 @@ public class GUI {
 	private JFrame frame;
 	private JTextField textFieldPrincipal;
 	private JTextField textFieldEliminar;
-	
-	/*private boolean esperandoRespuestaFinal = false;
-	private boolean esperandoNuevoInstrumento = false;
-	private boolean esperandoDiferencia = false;*/
+	private JLabel preguntaLabel;
 	
 	private LogicaAdivinador logica;
 	
-	private int estado = 0; //0: preguntando; 1: adivinando; 2: pidiendo nuevo objeto; 3: pidiendo diferencia
+	/*
+	 * 0: preguntando; (esperando "si" o "no")
+	 * 1: adivinando; (esperando "si" o "no")
+	 * 2: pidiendo nuevo objeto; 
+	 * 3: pidiendo diferencia entre el nuevo objeto y el del intento de adivinar
+	 */
+	private int estado = 0; 
 	private String nuevoInstrumento;
 	
 	
@@ -66,6 +69,10 @@ public class GUI {
 	 */
 	private void initialize() {
 		
+		/*
+		 *  SETEANDO PANELES Y CONTENEDORES (elementos estáticos) 
+		 */
+		
 		logica = new LogicaAdivinador();
 		
 		frame = new JFrame();
@@ -83,9 +90,10 @@ public class GUI {
 		
 		JPanel panel = new JPanel();
 		panelPrincipal.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(2, 0, 0, 0));
+		panel.setLayout(new GridLayout(2, 0, 0, 0));		
 		
-		JLabel preguntaLabel = new JLabel("Piensa en un instrumento");
+		// LABEL QUE CONTIENE A LA PREGUNTA		
+		preguntaLabel = new JLabel("Piensa en un instrumento");
 		preguntaLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		preguntaLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(preguntaLabel);
@@ -97,7 +105,6 @@ public class GUI {
 			estado = 1;
 		}
 		preguntaLabel.setText(text);
-		
 		
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
@@ -127,7 +134,7 @@ public class GUI {
 		
 		
 		/*
-		 * TEXTFIELD PRINCIPAL
+		 * TEXTFIELD PRINCIPAL (oyente principal)
 		 */
 
 		textFieldPrincipal = new JTextField();
@@ -140,8 +147,8 @@ public class GUI {
 				String input = textFieldPrincipal.getText();
 				textFieldPrincipal.setText("");
 
-				boolean resuestaPorSiNo = false;
-				boolean respuesta = false;
+				boolean resuestaPorSiNo = false; //si es verdadero el usuario ingresó "si" ó "no", falso en caso contrario
+				boolean respuesta = false; //si es verdadero la respuesta fue "si", falso en caso contrario (asumiendo que respuestaPorSiNo es verdadero)
 				if (input.toLowerCase().equals("si")) {
 					respuesta = true;
 					resuestaPorSiNo = true;
@@ -153,33 +160,28 @@ public class GUI {
 				
 				
 				switch (estado) {
-				case(0): //no estoy en una hoja
+				case(0): //estoy en un nodo interno
 					if (resuestaPorSiNo) {
 						try {
 							logica.siguientePregunta(respuesta);
-						} catch (BoundaryViolationException ex) {ex.printStackTrace();}
-						preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
-						if (!logica.haySiguientePregunta()) { //pasé a una hoja
+						} 
+						catch (BoundaryViolationException ex) { ex.printStackTrace(); }
+						
+						if (logica.haySiguientePregunta()) { //sigo en un nodo interno, continúo preguntando
+							preguntaLabel.setText(preguntar());
+							estado = 0;
+						} else { //pasé a una hoja, trato de adivinar
+							preguntaLabel.setText(adivinar());
 							estado = 1;
-							preguntaLabel.setText("El instrumento es " + logica.preguntaActual() + "?");
 						}
 					}
 					break;
 				case(1): //estoy en una hoja
 					if (resuestaPorSiNo) {
-						if (respuesta) { //adiviné
+						if (respuesta) { //adiviné!
 							JOptionPane.showMessageDialog(null, "Adiviné!");
-							estado = 0; //reinciando lógica e interfaz
-							logica.reiniciar();
-							String text;
-							if (logica.haySiguientePregunta()) {
-								text = "El instrumento " + logica.preguntaActual() + "?";
-							} else {
-								text = "El instrumento es " + logica.preguntaActual() + "?";
-								estado = 1;
-							}
-							preguntaLabel.setText(text);
-						} else { //no adiviné, en qué elemento pensabas?
+							reiniciarJuego();
+						} else { //no adiviné
 							preguntaLabel.setText("En qué instrumento estabas pensando?");
 							estado = 2;
 						}
@@ -191,52 +193,12 @@ public class GUI {
 					nuevoInstrumento = input;
 					estado = 3;
 					break;
-				case (3): 
+				case (3):
 					logica.agregarObjeto(nuevoInstrumento, input);
-					JOptionPane.showMessageDialog(null, "Jugá de nuevo!"); //reinciando lógica e interfaz
-					estado = 0;
-					logica.reiniciar();
-					String text;
-					if (logica.haySiguientePregunta()) {
-						text = "El instrumento " + logica.preguntaActual() + "?";
-					} else {
-						text = "El instrumento es " + logica.preguntaActual() + "?";
-						estado = 1;
-					}
-					preguntaLabel.setText(text);
+					JOptionPane.showMessageDialog(null, "Jugá de nuevo!"); 					
+					reiniciarJuego(); 
 					break;				
-				}
-				
-				/*
-				if (!esperandoRespuestaFinal && resuestaPorSiNo) {
-					if (logica.haySiguientePregunta()) { //no estoy en una hoja
-						preguntaLabel.setText("El instrumento " + logica.preguntaActual() + "?");
-						logica.setSiguientePregunta(respuesta);
-					} else  { //estoy en una hoja
-						preguntaLabel.setText("El instrumento es un/una " + logica.preguntaActual() + "?");						
-						esperandoRespuestaFinal = true;
-					}
-				} else if (esperandoRespuestaFinal && resuestaPorSiNo) {
-					esperandoRespuestaFinal = false;
-					if (respuesta) { //adiviné
-						JOptionPane.showMessageDialog(null, "Adiviné!");
-						//TODO reiniciar interfaz
-					} else { //no adiviné, en qué elemento pensabas?
-						preguntaLabel.setText("En qué instrumento estabas pensando?");
-						esperandoNuevoInstrumento = true;
-					}
-				} else if (esperandoNuevoInstrumento) {
-					esperandoNuevoInstrumento = false;
-					preguntaLabel.setText("Y cual es la diferencia entre un/una " + 
-							respuesta +" y un/una " + logica.preguntaActual() + "?");
-					nuevoElemento = respuesta;
-					esperandoDiferencia = true;
-				} else if (esperandoDiferencia) {
-					esperandoDiferencia = false;
-					logica.agregarObjeto(nuevoInstrumento, respuesta);
-					//TODO reiniciar interfaz
-				}*/
-				
+				}				
 			}
 		});
 		
@@ -345,5 +307,31 @@ public class GUI {
 			}
 		});
 		
+	}
+	
+	/*
+	 * Reincia la lógica y la interfaz para jugar de nuevo
+	 */
+	private void reiniciarJuego () {
+		logica.reiniciar();
+		
+		String text = logica.haySiguientePregunta() ? preguntar() : adivinar();
+		preguntaLabel.setText(text);
+		
+		estado = logica.haySiguientePregunta() ? 0 : 1;
+	}
+	
+	/*
+	 * Devuelve la pregunta en cadena de caracteres
+	 */
+	private String preguntar () {
+		return "El instrumento " + logica.preguntaActual() + "?";
+	}
+
+	/*
+	 * Devuelve el intento de adivinar en cadena de caracteres
+	 */
+	private String adivinar () {
+		return "El instrumento es " + logica.preguntaActual() + "?";
 	}
 }
