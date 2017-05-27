@@ -76,6 +76,7 @@ public class ArbolBinario<E> implements BinaryTree<E> {
 		if (!isEmpty())
 			throw new InvalidOperationException();
 		root = new BTNodo<E>(e);
+		size++;
 		return root;
 	}
 	

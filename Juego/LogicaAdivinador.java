@@ -104,6 +104,27 @@ public class LogicaAdivinador {
     public int cantidadPreguntas(){
     	return preguntas;
     }
+    // consulta la altura del árbol
+    public int alturaArbol(){
+    	try {
+			return alturaArbolAux(arbol.root(), 0);
+		} catch (EmptyTreeException e) {}
+    	
+    	return 0;
+    }
+    // método auxiliar, privado para calcular la altura del árbol
+    private int alturaArbolAux(Position<String> pos, int i) {
+    	try {
+			return Math.max(
+					arbol.hasRight(pos) ? alturaArbolAux(arbol.right(pos), i+1) : i, 
+					arbol.hasLeft(pos) ? alturaArbolAux(arbol.left(pos), i+1) : i
+					);
+		} 
+    	catch (InvalidPositionException e) {} 
+    	catch (BoundaryViolationException e) {}
+    	
+    	return 0;
+    }
 	// Devuelve una pila con las positions de los nodos internos, en el pdf dice que se debe usar una pila, puedo cambiarlo
 	// para que devuelva una lista con las posiciones invertidas, pero eso depende de como se vaya a hacer en la GUI
     public Stack<Position<String>> pilaInternos(){

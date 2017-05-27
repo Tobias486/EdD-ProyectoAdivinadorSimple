@@ -3,6 +3,7 @@ package Juego;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -23,12 +24,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSplitPane;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import javax.swing.JComboBox;
 
 public class GUI {
 
 	private JFrame frame;
 	private JTextField textFieldPrincipal;
-	private JTextField textFieldEliminar;
 	private JLabel preguntaLabel;
 	
 	private LogicaAdivinador logica;
@@ -134,6 +135,9 @@ public class GUI {
 		JPanel panel_3 = new JPanel();
 		panel_4.add(panel_3);
 		
+		JComboBox comboBoxEliminar = new JComboBox();
+		panel_3.add(comboBoxEliminar);
+		
 		
 		/*
 		 * TEXTFIELD PRINCIPAL (oyente principal)
@@ -227,6 +231,15 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cards.show(container, "panelEliminar");
+				
+				Stack<Position<String>> pilaNodos = logica.pilaInternos();
+					
+				while (!pilaNodos.isEmpty()) {
+					try {
+						Position<String> pos = pilaNodos.pop();
+						comboBoxEliminar.addItem(pos.element());
+					} catch (EmptyStackException ex) {}
+				}
 			}
 		});
 		
@@ -269,10 +282,11 @@ public class GUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*String info = "";
-				for (String s : logica.generarInformacion())
-					info = info + s + "\n"; 
-				JOptionPane.showMessageDialog(null, info);*/
+				String info = 
+						"Altura del arbol: " + logica.alturaArbol() + "\n" +
+						"Cantidad de preguntas: " + logica.cantidadPreguntas() + "\n" +
+						"Cantidad de objetos: " + logica.cantidadObjetos(); 
+				JOptionPane.showMessageDialog(null, info);
 			}
 		});
 		
@@ -302,10 +316,6 @@ public class GUI {
 		/*
 		 * PANEL ELIMINAR
 		 */
-		
-		textFieldEliminar = new JTextField();
-		panel_3.add(textFieldEliminar);
-		textFieldEliminar.setColumns(30);
 		
 		JButton eliminarCancelarButton = new JButton("Cancelar");
 		eliminarCancelarButton.setFont(new Font("Tahoma", Font.BOLD, 11));
