@@ -1,9 +1,10 @@
 package Juego;
 
+
 import TDAArbolBinario.*;
 
-/*USANDO LOS QUICKFIXES DE ECLIPSE SE IMPORTARON LAS SIGUIENTES COSAS, SIN EMBARGO, NO SÉ COMO SE IMPORTA DE MANERA MÁS COMPRIMIDA
-PERO CREO QUE VOS SÍ
+/*USANDO LOS QUICKFIXES DE ECLIPSE SE IMPORTARON LAS SIGUIENTES COSAS, SIN EMBARGO, NO SÃ‰ COMO SE IMPORTA DE MANERA MÃ�S COMPRIMIDA
+PERO CREO QUE VOS SÃ�
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -14,6 +15,13 @@ import TDAArbolBinario.Position;
 import TDAPila.Pila;
 import TDAPila.Stack;
 */
+
+/*
+ * CREO QUE LOS ÚNICOS NECESARIOS ADICIONALES SON LOS SIGUIENTES:
+ */
+import TDAPila.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LogicaAdivinador {
     BinaryTree<String> arbol;
@@ -66,10 +74,10 @@ public class LogicaAdivinador {
         String pregunta = "";
         try {
             if(arbol.isInternal(pp)){
-                pregunta +=  "¿"+pp.element()+"?";
+                pregunta +=  "Â¿"+pp.element()+"?";
             }
             else {
-                pregunta += "Estás pensando en "+pp.element()+"?"; 
+                pregunta += "EstÃ¡s pensando en "+pp.element()+"?"; 
             }
         }
         catch(InvalidPositionException e){}
@@ -140,7 +148,7 @@ public class LogicaAdivinador {
     	catch(BoundaryViolationException e){}
     	return s;
     }
-    // Se llama a este método utilizando uno de las Positions presentes en pilaInternos
+    // Se llama a este mÃ©todo utilizando uno de las Positions presentes en pilaInternos
     public void eliminarSubarbol(Position<String> p){
     	auxEliminar(p);
     }

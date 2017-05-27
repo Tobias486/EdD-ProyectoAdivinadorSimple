@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import TDAArbolBinario.BoundaryViolationException;
+import TDAArbolBinario.Position;
+import TDAPila.*;
 
 import java.awt.Font;
 import java.awt.CardLayout;
@@ -280,10 +282,19 @@ public class GUI {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				/*String info = "";
-				for (String s : logica.mostrarNodosInternos())
-					info = info + s + "\n"; 
-				JOptionPane.showMessageDialog(null, info);*/
+				String info = ""; //esto se va a imprimir
+				Stack<Position<String>> pilaNodos = logica.pilaInternos();
+				
+				if (pilaNodos.isEmpty()) //por debug
+					System.out.println("b");
+					
+				while (!pilaNodos.isEmpty()) {
+					try {
+						info = info + pilaNodos.pop().element() + "\n";
+						System.out.println("a");
+					} catch (EmptyStackException ex) {}
+				}
+				JOptionPane.showMessageDialog(null, info);
 			}
 		});
 		
