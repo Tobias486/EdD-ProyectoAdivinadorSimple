@@ -75,14 +75,17 @@ public class LogicaAdivinador {
         objetos++;
         preguntas++;
     }
-    
+    	// consulta para la cantidad de objetos
     public int cantidadObjetos(){
     	return objetos;
     }
+	// consulta para la cantidad de preguntas
     public int cantidadPreguntas(){
     	return preguntas;
     }
-    public Stack<Position<String>> listaInternos(){
+	// Devuelve una pila con las positions de los nodos internos, en el pdf dice que se debe usar una pila, puedo cambiarlo
+	// para que devuelva una lista con las posiciones invertidas, pero eso depende de como se vaya a hacer en la GUI
+    public Stack<Position<String>> pilaInternos(){
     	Iterable<Position<String>> nodosArbol = arbol.positions();
     	Stack<Position<String>> internos = new Pila<Position<String>>();
 
@@ -102,6 +105,8 @@ public class LogicaAdivinador {
  
     	return internos;
     }
+	
+	// metodo privado para eliminar
     private String auxEliminar(Position<String> p){
     	String s;
     	s = p.element();
@@ -122,7 +127,7 @@ public class LogicaAdivinador {
     	catch(BoundaryViolationException e){}
     	return s;
     }
-    
+    // Se llama a este método utilizando uno de las Positions presentes en pilaInternos
     public void eliminarSubarbol(Position<String> p){
     	auxEliminar(p);
     }
