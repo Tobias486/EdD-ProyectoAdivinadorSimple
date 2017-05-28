@@ -77,7 +77,7 @@ public class GUI {
 	private void initialize() {
 		
 		/*
-		 * CREANDO OBJETO L”GICA DEL JUEGO
+		 * CREANDO OBJETO L√ìGICA DEL JUEGO
 		 */
 		logica = new LogicaAdivinador();
 		
@@ -178,7 +178,7 @@ public class GUI {
 		panelEliminar.setLayout(new GridLayout(4, 0, 0, 0));
 		
 		JLabel eliminarLabel = new JLabel("");
-		eliminarLabel.setText("Seleccione el rÛtulo del su·rbol que desea eliminar \n (estos cambos no se pueden deshacer)");
+		eliminarLabel.setText("Seleccione el r√≥tulo del su√°rbol que desea eliminar \n (estos cambos no se pueden deshacer)");
 		eliminarLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		eliminarLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelEliminar.add(eliminarLabel);
@@ -254,7 +254,7 @@ public class GUI {
 				String input = juegoTextField.getText();
 				juegoTextField.setText("");
 
-				boolean resuestaPorSiNo = false; //si es verdadero el usuario ingresÛ "si" Û "no", falso en caso contrario
+				boolean resuestaPorSiNo = false; //si es verdadero el usuario ingres√≥ "si" √≥ "no", falso en caso contrario
 				boolean respuesta = false; //si es verdadero la respuesta fue "si", falso en caso contrario (asumiendo que respuestaPorSiNo es verdadero)
 				if (input.toLowerCase().equals("si")) {
 					respuesta = true;
@@ -274,10 +274,10 @@ public class GUI {
 						} 
 						catch (BoundaryViolationException ex) { ex.printStackTrace(); }
 						
-						if (logica.haySiguientePregunta()) { //sigo en un nodo interno, contin˙o preguntando
+						if (logica.haySiguientePregunta()) { //sigo en un nodo interno, contin√∫o preguntando
 							juegoLabelPregunta.setText(preguntar());
 							estado = 0;
-						} else { //pasÈ a una hoja, trato de adivinar
+						} else { //pas√© a una hoja, trato de adivinar
 							juegoLabelPregunta.setText(adivinar());
 							estado = 1;
 						}
@@ -285,11 +285,11 @@ public class GUI {
 					break;
 				case(1): //estoy en una hoja
 					if (resuestaPorSiNo) {
-						if (respuesta) { //adivinÈ!
-							JOptionPane.showMessageDialog(null, "AdivinÈ!");
+						if (respuesta) { //adivin√©!
+							JOptionPane.showMessageDialog(null, "Adivin√©!");
 							reiniciarJuego();
-						} else { //no adivinÈ
-							juegoLabelPregunta.setText("En quÈ instrumento estabas pensando?");
+						} else { //no adivin√©
+							juegoLabelPregunta.setText("En qu√© instrumento estabas pensando?");
 							estado = 2;
 						}
 					}
@@ -305,7 +305,7 @@ public class GUI {
 				case (3):
 					if (!input.equals("")) {
 						logica.agregarObjeto(nuevoInstrumento, input);
-						JOptionPane.showMessageDialog(null, "Jug· de nuevo!"); 					
+						JOptionPane.showMessageDialog(null, "Jug√° de nuevo!"); 					
 						reiniciarJuego(); 
 					}
 					break;				
@@ -352,8 +352,17 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String info = "";
-				for (String s : logica.generarDescripciones())
-					info = info + s + "\n"; 
+				boolean finLinea = false;
+				for (String s : logica.generarDescripciones()){
+					if(finLinea){
+						info +=s + "\n"; 
+						finLinea = !finLinea;
+					}
+					else{
+						info+=s.substring(0,1).toUpperCase()+s.substring(1);
+						finLinea = !finLinea;
+					}
+				}
 				JOptionPane.showMessageDialog(null, info);
 			}
 		});
@@ -401,7 +410,7 @@ public class GUI {
 		
 		
 		/*
-		 * SETEANDO LISTENERS PARA EL PANEL DE ELIMINAR SUB¡RBOL
+		 * SETEANDO LISTENERS PARA EL PANEL DE ELIMINAR SUB√ÅRBOL
 		 */
 		
 		eliminarVolverButton.addActionListener(new ActionListener() {
@@ -431,7 +440,7 @@ public class GUI {
 	 * METODOS AUXILIARES, PRIVADOS
 	 */
 	
-	//Reincia la lÛgica y la interfaz para jugar de nuevo
+	//Reincia la l√≥gica y la interfaz para jugar de nuevo
 	private void reiniciarJuego () {
 		logica.reiniciar();
 		
