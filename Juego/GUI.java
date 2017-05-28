@@ -77,7 +77,7 @@ public class GUI {
 	private void initialize() {
 		
 		/*
-		 * CREANDO OBJETO L√ìGICA DEL JUEGO
+		 * CREANDO OBJETO L”GICA DEL JUEGO
 		 */
 		logica = new LogicaAdivinador();
 		
@@ -144,7 +144,7 @@ public class GUI {
 		
 		JPanel panelEditar = new JPanel();
 		frame.getContentPane().add(panelEditar, "panelEditar");
-		panelEditar.setLayout(new GridLayout(6, 0, 0, 10));
+		panelEditar.setLayout(new GridLayout(7, 0, 0, 5));
 		panelEditar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		JButton editarCargarButton = new JButton("Cargar partida");
@@ -153,13 +153,16 @@ public class GUI {
 		JButton editarSalvarButton = new JButton("Salvar partida");
 		panelEditar.add(editarSalvarButton);
 		
+		JButton editarMostrarInfoArbol = new JButton("Mostrar info del ·rbol");
+		panelEditar.add(editarMostrarInfoArbol);
+		
 		JButton editarMostrarNodosButton = new JButton("Mostrar nodos");
 		panelEditar.add(editarMostrarNodosButton);
 		
 		JButton editarMostrarDescripciones = new JButton("Mostrar descripciones");
 		panelEditar.add(editarMostrarDescripciones);
 		
-		JButton editarEliminarButton = new JButton("Eliminar subarbol");
+		JButton editarEliminarButton = new JButton("Eliminar sub·rbol");
 		editarEliminarButton.setForeground(Color.RED);
 		panelEditar.add(editarEliminarButton);
 		
@@ -178,7 +181,7 @@ public class GUI {
 		panelEliminar.setLayout(new GridLayout(4, 0, 0, 0));
 		
 		JLabel eliminarLabel = new JLabel("");
-		eliminarLabel.setText("Seleccione el r√≥tulo del su√°rbol que desea eliminar \n (estos cambos no se pueden deshacer)");
+		eliminarLabel.setText("<html>Seleccione el rÛtulo del su·rbol que desea eliminar<br>(estos cambos no se pueden deshacer)</html>");
 		eliminarLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		eliminarLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelEliminar.add(eliminarLabel);
@@ -254,7 +257,7 @@ public class GUI {
 				String input = juegoTextField.getText();
 				juegoTextField.setText("");
 
-				boolean resuestaPorSiNo = false; //si es verdadero el usuario ingres√≥ "si" √≥ "no", falso en caso contrario
+				boolean resuestaPorSiNo = false; //si es verdadero el usuario ingresa "si" Û "no", falso en caso contrario
 				boolean respuesta = false; //si es verdadero la respuesta fue "si", falso en caso contrario (asumiendo que respuestaPorSiNo es verdadero)
 				if (input.toLowerCase().equals("si")) {
 					respuesta = true;
@@ -274,7 +277,7 @@ public class GUI {
 						} 
 						catch (BoundaryViolationException ex) { ex.printStackTrace(); }
 						
-						if (logica.haySiguientePregunta()) { //sigo en un nodo interno, contin√∫o preguntando
+						if (logica.haySiguientePregunta()) { //sigo en un nodo interno, contin˙o preguntando
 							juegoLabelPregunta.setText(preguntar());
 							estado = 0;
 						} else { //pas√© a una hoja, trato de adivinar
@@ -285,11 +288,11 @@ public class GUI {
 					break;
 				case(1): //estoy en una hoja
 					if (resuestaPorSiNo) {
-						if (respuesta) { //adivin√©!
-							JOptionPane.showMessageDialog(null, "Adivin√©!");
+						if (respuesta) { //adivinÈ!
+							JOptionPane.showMessageDialog(null, "AdivinÈ!");
 							reiniciarJuego();
-						} else { //no adivin√©
-							juegoLabelPregunta.setText("En qu√© instrumento estabas pensando?");
+						} else { //no adivinÈ
+							juegoLabelPregunta.setText("En quÈ instrumento estabas pensando?");
 							estado = 2;
 						}
 					}
@@ -305,7 +308,7 @@ public class GUI {
 				case (3):
 					if (!input.equals("")) {
 						logica.agregarObjeto(nuevoInstrumento, input);
-						JOptionPane.showMessageDialog(null, "Jug√° de nuevo!"); 					
+						JOptionPane.showMessageDialog(null, "Jug· de nuevo!"); 					
 						reiniciarJuego(); 
 					}
 					break;				
@@ -386,18 +389,16 @@ public class GUI {
 			}
 		});
 		
-		/*
-		infoArbolButton.addActionListener(new ActionListener() {
-			
+		editarMostrarInfoArbol.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String info = 
-						"Altura del arbol: " + logica.alturaArbol() + "\n" +
+						"Altura del ·rbol: " + logica.alturaArbol() + "\n" +
 						"Cantidad de preguntas: " + logica.cantidadPreguntas() + "\n" +
 						"Cantidad de objetos: " + logica.cantidadObjetos(); 
 				JOptionPane.showMessageDialog(null, info);
 			}
-		});*/
+		});
 		
 		editarVolverButton.addActionListener(new ActionListener() {			
 			@Override
@@ -410,7 +411,7 @@ public class GUI {
 		
 		
 		/*
-		 * SETEANDO LISTENERS PARA EL PANEL DE ELIMINAR SUB√ÅRBOL
+		 * SETEANDO LISTENERS PARA EL PANEL DE ELIMINAR SUB¡RBOL
 		 */
 		
 		eliminarVolverButton.addActionListener(new ActionListener() {
@@ -440,7 +441,7 @@ public class GUI {
 	 * METODOS AUXILIARES, PRIVADOS
 	 */
 	
-	//Reincia la l√≥gica y la interfaz para jugar de nuevo
+	//Reincia la lÛgica y la interfaz para jugar de nuevo
 	private void reiniciarJuego () {
 		logica.reiniciar();
 		
