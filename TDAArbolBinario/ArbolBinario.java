@@ -91,18 +91,36 @@ public class ArbolBinario<E> implements BinaryTree<E> {
 	public E remove (Position<E> p) throws InvalidOperationException, InvalidPositionException {
 		BTNodo<E> aux = checkPosition(p);
 		E result = aux.element();
+		
 		if (aux.getLeft() != null && aux.getRight() != null)
 			throw new InvalidOperationException();
 		
 		BTPosition<E> padre = aux.getParent();
-		BTPosition<E> hijo = aux.getLeft() != null ? aux.getLeft() : aux.getRight();
+		BTPosition<E> hijo = (aux.getLeft() != null) ? aux.getLeft() : aux.getRight();
 		
-		if (padre.getLeft() == aux)
-			padre.setLeft(hijo);
-		else
-			padre.setRight(hijo);
-		hijo.setParent(padre);
+		if(aux == root && hijo == null)
+			root = null;
 		
+		if(aux == root && hijo != null){
+			root = (BTNodo<E>) hijo;
+			hijo.setParent(null);
+		}
+		if(aux != root && hijo == null){
+			if(aux.getParent().getLeft() == aux)
+				aux.getParent().setLeft(null);
+			if(aux.getParent().getRight() == aux)
+				aux.getParent().setRight(null);
+		}
+		if(aux != root && hijo != null){
+			hijo.setParent(aux.getParent());
+			if(aux.getParent().getLeft() == aux)
+				aux.getParent().setLeft(null);
+			if(aux.getParent().getRight() == aux)
+				aux.getParent().setRight(null);
+		}
+		
+		
+		size--;
 		return result;
 	}
 	
