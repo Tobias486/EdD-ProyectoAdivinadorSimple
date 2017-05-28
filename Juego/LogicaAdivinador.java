@@ -159,11 +159,15 @@ public class LogicaAdivinador {
     private void auxEliminar(Position<String> p){
     	try{
 	    	if(arbol.isInternal(p)){
+	    		preguntas--;
 		    	if(arbol.hasLeft(p))
 		    		auxEliminar(arbol.left(p));
 		    	if(arbol.hasRight(p))
 		    		auxEliminar(arbol.right(p));
+		    	
 	    	}
+	    	else
+	    		objetos--;
 	    	
 	    	arbol.remove(p);
 	    	
