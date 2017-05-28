@@ -3,23 +3,23 @@ package TDAArbolBinario;
 import java.util.Iterator;
 import TDALista.Lista;
 
-// TODO: cambiar todos los tipos est·ticos del TDA por BTNodo o BTPosition (checkPosition debe retornar el tipo idÈntico)
-// TODO: comentar los mÈtodos privados restantes (luego les doy forma de JavaDoc)
+// TODO: cambiar todos los tipos est√°ticos del TDA por BTNodo o BTPosition (checkPosition debe retornar el tipo id√©ntico)
+// TODO: comentar los m√©todos privados restantes (luego les doy forma de JavaDoc)
 
 /**
- * Estructura iterable de un ·rbol que implementa la interfaz BinaryTree
- * @author TobÌas Molina Blanco, Teo Vogel
+ * Estructura iterable de un √°rbol que implementa la interfaz BinaryTree
+ * @author Tob√≠as Molina Blanco, Teo Vogel
  *
  * @param <E>
  */
 
 public class ArbolBinario<E> implements BinaryTree<E> {
 
-	private BTNodo<E> root; //referencia a la raÌz del ·rbol
-	private int size; //cantidad de nodos del ·rbol
+	private BTNodo<E> root; //referencia a la ra√≠z del √°rbol
+	private int size; //cantidad de nodos del √°rbol
 	
 	/**
-	 * Constructor vacÌo
+	 * Constructor vac√≠o
 	 */
 	public ArbolBinario () {
 		root = null;
@@ -59,13 +59,14 @@ public class ArbolBinario<E> implements BinaryTree<E> {
 	}
 	
     /**
-     * Verifica que la posiciÛn pasada por pr·metro no sea nula y del tipo correcto (adem·s de verificar que el ·rbol no estÈ vacÌo)
-     * @param p, posiciÛn a verificar
-     * @return el nodo al cual apuntaba la posiciÛn
-     * @throws InvalidPositionException si la posiciÛn no cumple con las mencionadas condiciones
+     * Verifica que la posici√≥n pasada por pr√°metro no sea nula y del tipo correcto (adem√°s de verificar que el √°rbol no est√© vac√≠o)
+     * @param p, posici√≥n a verificar
+     * @return el nodo al cual apuntaba la posici√≥n
+     * @throws InvalidPositionException si la posici√≥n no cumple con las mencionadas condiciones
      */
 	private BTNodo<E> checkPosition(Position<E> p) throws InvalidPositionException {
-		if (p == null && !isEmpty())
+		// if(p == null || isEmpty())
+		if (p == null || isEmpty())
 			throw new InvalidPositionException();
 		try {
 			return (BTNodo<E>) p;
