@@ -71,17 +71,7 @@ public class LogicaAdivinador {
     }
     
     public String preguntaActual(){
-        String pregunta = "";
-        try {
-            if(arbol.isInternal(pp)){
-                pregunta +=  "Â¿"+pp.element()+"?";
-            }
-            else {
-                pregunta += "EstÃ¡s pensando en "+pp.element()+"?"; 
-            }
-        }
-        catch(InvalidPositionException e){}
-        return pregunta;
+        return pp.element();
     }
     
     public void agregarObjeto(String obj, String dif) {
