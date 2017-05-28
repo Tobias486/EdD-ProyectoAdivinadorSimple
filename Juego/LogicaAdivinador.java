@@ -235,22 +235,7 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
     	catch(BoundaryViolationException e){}
     }
     /*
-    Este es el metodo que hay que llamar para que te de las descripciones, con el codigo comentado aqui mismo se pueden
-    exponer los resultados.
-    
-    String descripciones = "";
-    Iterable<String> l = logica.generarDescripciones();
-    Iterator<String> it = l.iterator();
-    try{
-	String a;
-	while(it.hasNext()){
-		a = it.next();
-		descripciones+=a.substring(0,1).toUpperCase()+a.substring(1);
-		descripciones+=it.next() + "\n";
-	}
-    }catch(NoSuchElementException ex){}
-				
-    JOptionPane.showMessageDialog(null, descripciones)
+    Este es el metodo que hay que llamar para que te de las descripciones
     
     */
     public Iterable<String> generarDescripciones(){
