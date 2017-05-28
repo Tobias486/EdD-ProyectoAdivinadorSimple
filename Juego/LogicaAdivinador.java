@@ -140,30 +140,51 @@ public class LogicaAdivinador {
     	return internos;
     }
 	
-	// metodo privado para eliminar
-    private String auxEliminar(Position<String> p){
-    	String s;
-    	s = p.element();
+	// metodo privado para conseguir el elemento que va a reemplazar al rotulo de la pregunta eliminada
+    private String getLeftmost(Position<String> p){
+    	String s="";
     	try{
-	    	if(arbol.hasRight(p)){
-	    		s = auxEliminar(arbol.right(p));
-	    		arbol.remove(arbol.right(p));
-	    		
+	    	if(arbol.isExternal(p))
+	    		s = p.element();
+	    	else{
+	    		s = getLeftmost(arbol.left(p));
 	    	}
-	    	if(arbol.hasLeft(p)){
-	    		s = auxEliminar(arbol.left(p));
-	    		arbol.remove(arbol.left(p));
-	    	}
-	    	arbol.replace(p,s);
     	}
-    	catch(InvalidPositionException e){}
-    	catch(InvalidOperationException e){}
     	catch(BoundaryViolationException e){}
+    	catch(InvalidPositionException e){}
+    	
     	return s;
+    }
+    //metodo privado que borra todo un subarbol con raiz p
+    private void auxEliminar(Position<String> p){
+    	try{
+	    	if(arbol.isInternal(p)){
+		    	if(arbol.hasLeft(p))
+		    		auxEliminar(arbol.left(p));
+		    	
+		    	if(arbol.hasRight(p)){
+		    		auxEliminar(arbol.right(p));
+		    	}
+	    	}
+	    	
+	    	arbol.remove(p);
+	    	
+    	} catch(InvalidPositionException e){System.out.println("IPS");}
+    	catch(BoundaryViolationException e){System.out.println("BVE");}
+    	catch(InvalidOperationException e){System.out.println("IOE");}
     }
     // Se llama a este mÃ©todo utilizando uno de las Positions presentes en pilaInternos
     public void eliminarSubarbol(Position<String> p){
-    	auxEliminar(p);
+    	try{
+    		arbol.replace(p, getLeftmost(p));
+    		if(arbol.hasLeft(p))
+    			auxEliminar(arbol.left(p));
+    		
+	    	if(arbol.hasRight(p))
+	    		auxEliminar(arbol.right(p));
+	    }
+	    catch(InvalidPositionException e){}
+	    catch(BoundaryViolationException e){}
     }
 	// Toda la recursion que forma las descripciones
 private void auxDescripciones (PositionList<String> descs, String s, Position<String> p){
