@@ -161,15 +161,13 @@ public class LogicaAdivinador {
 	    	if(arbol.isInternal(p)){
 		    	if(arbol.hasLeft(p))
 		    		auxEliminar(arbol.left(p));
-		    	
-		    	if(arbol.hasRight(p)){
+		    	if(arbol.hasRight(p))
 		    		auxEliminar(arbol.right(p));
-		    	}
 	    	}
 	    	
 	    	arbol.remove(p);
 	    	
-    	} catch(InvalidPositionException e){System.out.println("IPS");}
+    	}catch(InvalidPositionException e){System.out.println("IPS");}
     	catch(BoundaryViolationException e){System.out.println("BVE");}
     	catch(InvalidOperationException e){System.out.println("IOE");}
     }
