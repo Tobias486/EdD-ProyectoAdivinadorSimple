@@ -163,7 +163,7 @@ public class LogicaAdivinador {
     public void eliminarSubarbol(Position<String> p){
     	auxEliminar(p);
     }
-	
+	// Toda la recursion que forma las descripciones
 private void auxDescripciones (PositionList<String> descs, String s, Position<String> p){
     	try{
     		if(arbol.isExternal(p)){
@@ -209,7 +209,25 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
     	catch(InvalidPositionException e){}
     	catch(BoundaryViolationException e){}
     }
+    /*
+    Este es el metodo que hay que llamar para que te de las descripciones, con el codigo comentado aqui mismo se pueden
+    exponer los resultados.
     
+    String descripciones = "";
+    Iterable<String> l = logica.generarDescripciones();
+    Iterator<String> it = l.iterator();
+    try{
+	String a;
+	while(it.hasNext()){
+		a = it.next();
+		info+=a.substring(0,1).toUpperCase()+a.substring(1);
+		info+=it.next() + "\n";
+	}
+    }catch(NoSuchElementException ex){}
+				
+    JOptionPane.showMessageDialog(null, descripciones)
+    
+    */
     public Iterable<String> generarDescripciones(){
     	PositionList<String> lista = new Lista<String>();
     	try{
