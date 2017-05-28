@@ -330,6 +330,22 @@ public class GUI {
 		/*
 		 * SETEANDO LISTENERS EN EL PANEL PARA EDITAR Y VER INFO DE LA ESCTRUCTURA
 		 */
+		editarSalvarButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		
+		editarCargarButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		
 		
 		editarMostrarNodosButton.addActionListener(new ActionListener() {			
 			@Override
