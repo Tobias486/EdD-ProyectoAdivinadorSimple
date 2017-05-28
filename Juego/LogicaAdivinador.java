@@ -163,5 +163,65 @@ public class LogicaAdivinador {
     public void eliminarSubarbol(Position<String> p){
     	auxEliminar(p);
     }
+	
+private void auxDescripciones (PositionList<String> descs, String s, Position<String> p){
+    	try{
+    		if(arbol.isExternal(p)){
+    			descs.addLast(p.element());
+    			descs.addLast(s);
+    		}
+    	
+    		else {
+    			if(arbol.hasLeft(p)){
+    				
+    				if(arbol.isRoot(p) && arbol.isExternal(arbol.left(p))){
+        				descs.addLast(arbol.left(p).element());
+        				descs.addLast(s+" no "+p.element());	
+        			}
+    				else if(arbol.isExternal(arbol.left(p)))
+    					auxDescripciones(descs, s+" y no "+p.element(), arbol.left(p));
+    				
+    				else{
+    					if(arbol.isRoot(p))
+    						auxDescripciones(descs, s+" no "+p.element(), arbol.left(p));	
+    					else
+    						auxDescripciones(descs, s+", no "+p.element(), arbol.left(p));
+    				}
+    			}
+    			
+    			if(arbol.hasRight(p)){
+    				if(arbol.isRoot(p) && arbol.isExternal(arbol.right(p))){
+        				descs.addLast(arbol.right(p).element());
+        				descs.addLast(s+" "+p.element());
+        			}
+    				else if(arbol.isExternal(arbol.right(p)))
+    					auxDescripciones(descs, s+" y "+p.element(), arbol.right(p));
+    				else{
+    					if(arbol.isRoot(p))
+    						auxDescripciones(descs, s+" "+p.element(), arbol.right(p));
+    					else
+    						auxDescripciones(descs, s+" "+p.element(), arbol.right(p));
+    				}
+    			}
+    			
+    		}
+    	}
+    	catch(InvalidPositionException e){}
+    	catch(BoundaryViolationException e){}
+    }
     
+    public Iterable<String> generarDescripciones(){
+    	PositionList<String> lista = new Lista<String>();
+    	try{
+    		if(arbol.size() == 1){
+    			lista.addFirst(arbol.root().element());
+    			lista.addLast(" es un instrumento");
+    		}
+    		else
+    			auxDescripciones(lista," es un instrumento que",arbol.root());
+    	} catch(EmptyTreeException e){}
+    	return lista;
+    }
+		
+	
 }
