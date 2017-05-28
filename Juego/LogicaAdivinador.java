@@ -220,8 +220,8 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
 	String a;
 	while(it.hasNext()){
 		a = it.next();
-		info+=a.substring(0,1).toUpperCase()+a.substring(1);
-		info+=it.next() + "\n";
+		descripciones+=a.substring(0,1).toUpperCase()+a.substring(1);
+		descripciones+=it.next() + "\n";
 	}
     }catch(NoSuchElementException ex){}
 				
