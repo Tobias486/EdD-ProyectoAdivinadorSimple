@@ -3,34 +3,38 @@ package Juego;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.ComboBoxEditor;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
-import java.awt.GridLayout;
-import javax.swing.JTextField;
+import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import TDAArbolBinario.BoundaryViolationException;
 import TDAArbolBinario.Position;
-import TDAPila.*;
+import TDAPila.EmptyStackException;
+import TDAPila.Stack;
 
-import java.awt.Font;
-import java.awt.CardLayout;
-import java.awt.event.ActionListener;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import javax.swing.JSplitPane;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.JTextField;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import javax.swing.JComboBox;
+import java.awt.FlowLayout;
+import javax.swing.border.EmptyBorder;
 
 public class GUI {
 
 	private JFrame frame;
-	private JTextField textFieldPrincipal;
-	private JLabel preguntaLabel;
+	private JTextField juegoTextField;
+	private JLabel juegoLabelPregunta;
 	
 	private LogicaAdivinador logica;
 	
@@ -43,7 +47,7 @@ public class GUI {
 	private int estado = 0; 
 	private String nuevoInstrumento;
 	
-	
+
 	/**
 	 * Launch the application.
 	 */
@@ -73,33 +77,167 @@ public class GUI {
 	private void initialize() {
 		
 		/*
-		 *  SETEANDO PANELES Y CONTENEDORES (elementos estáticos) 
+		 * CREANDO OBJETO LÓGICA DEL JUEGO
 		 */
-		
 		logica = new LogicaAdivinador();
+		
+		
+		/*
+		 * CREANDO Y ACOMODANDO LOS COMPONENTES DE LA INTERFAZ 
+		 */
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel container = new JPanel();
-		frame.getContentPane().add(container, BorderLayout.CENTER);
-		container.setLayout(new CardLayout(0, 0));
-		CardLayout cards = (CardLayout) container.getLayout();
+		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		CardLayout cards = (CardLayout) frame.getContentPane().getLayout();
 		
 		JPanel panelPrincipal = new JPanel();
-		container.add(panelPrincipal, "panelPrincipal");
+		frame.getContentPane().add(panelPrincipal, "panelPrincipal");
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
+		panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		JPanel panel = new JPanel();
-		panelPrincipal.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new GridLayout(2, 0, 0, 0));		
+		JLabel lblNewLabel = new JLabel("Titulo");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panelPrincipal.add(lblNewLabel, BorderLayout.NORTH);
 		
-		// LABEL QUE CONTIENE A LA PREGUNTA		
-		preguntaLabel = new JLabel("Piensa en un instrumento");
-		preguntaLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		preguntaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(preguntaLabel);
+		JPanel mainButtonContainer = new JPanel();
+		panelPrincipal.add(mainButtonContainer, BorderLayout.CENTER);
+		mainButtonContainer.setLayout(new GridLayout(3, 0, 0, 30));
+		mainButtonContainer.setBorder(BorderFactory.createEmptyBorder(30, 100, 30, 100));
+		
+		JButton mainJugarButton = new JButton("JUGAR");
+		mainButtonContainer.add(mainJugarButton);
+		
+		JButton mainEditarButton = new JButton("EDITAR");
+		mainButtonContainer.add(mainEditarButton);
+		
+		JButton mainInfoButton = new JButton("INFO");
+		mainButtonContainer.add(mainInfoButton);
+		
+		JPanel panelJuego = new JPanel();
+		frame.getContentPane().add(panelJuego, "panelJuego");
+		panelJuego.setLayout(new GridLayout(3, 0, 0, 0));
+		panelJuego.setBorder(new EmptyBorder(40, 0, 0, 0));
+		
+		juegoLabelPregunta = new JLabel("?");
+		juegoLabelPregunta.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		juegoLabelPregunta.setHorizontalAlignment(SwingConstants.CENTER);
+		panelJuego.add(juegoLabelPregunta);
+		
+		JPanel juegoTextFieldContainer = new JPanel();
+		panelJuego.add(juegoTextFieldContainer);
+		
+		juegoTextField = new JTextField();
+		juegoTextFieldContainer.add(juegoTextField);
+		juegoTextField.setColumns(30);
+		
+		JPanel juegoButtonContainer = new JPanel();
+		panelJuego.add(juegoButtonContainer);
+		juegoButtonContainer.setLayout(new BorderLayout(0, 0));
+		juegoButtonContainer.setBorder(new EmptyBorder(20, 20, 20, 20));
+		
+		JButton juegoVolverButton = new JButton("Volver");
+		juegoButtonContainer.add(juegoVolverButton, BorderLayout.WEST);
+		
+		
+		JPanel panelEditar = new JPanel();
+		frame.getContentPane().add(panelEditar, "panelEditar");
+		panelEditar.setLayout(new GridLayout(6, 0, 0, 10));
+		panelEditar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		
+		JButton editarCargarButton = new JButton("Cargar partida");
+		panelEditar.add(editarCargarButton);
+		
+		JButton editarSalvarButton = new JButton("Salvar partida");
+		panelEditar.add(editarSalvarButton);
+		
+		JButton editarMostrarNodosButton = new JButton("Mostrar nodos");
+		panelEditar.add(editarMostrarNodosButton);
+		
+		JButton editarMostrarDescripciones = new JButton("Mostrar descripciones");
+		panelEditar.add(editarMostrarDescripciones);
+		
+		JButton editarEliminarButton = new JButton("Eliminar subarbol");
+		editarEliminarButton.setForeground(Color.RED);
+		panelEditar.add(editarEliminarButton);
+		
+		JPanel editarButtonContainer = new JPanel();
+		panelEditar.add(editarButtonContainer);
+		editarButtonContainer.setLayout(new BorderLayout(0, 0));
+		
+		JButton editarVolverButton = new JButton("Volver");
+		editarButtonContainer.add(editarVolverButton, BorderLayout.WEST);
+		
+		JPanel panelInfo = new JPanel();
+		frame.getContentPane().add(panelInfo, "panelInfo");
+		
+		JPanel panelEliminar = new JPanel();
+		frame.getContentPane().add(panelEliminar, "panelEliminar");
+		panelEliminar.setLayout(new GridLayout(4, 0, 0, 0));
+		
+		JLabel eliminarLabel = new JLabel("");
+		eliminarLabel.setText("Seleccione el rótulo del suárbol que desea eliminar \n (estos cambos no se pueden deshacer)");
+		eliminarLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		eliminarLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panelEliminar.add(eliminarLabel);
+		
+		JPanel eliminarComboBoxContainer = new JPanel();
+		panelEliminar.add(eliminarComboBoxContainer);
+		eliminarComboBoxContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JComboBox eliminarComboBox = new JComboBox();
+		eliminarComboBoxContainer.add(eliminarComboBox);
+		
+		JPanel eliminarButtonContainer = new JPanel();
+		panelEliminar.add(eliminarButtonContainer);
+		
+		JButton eliminarEliminarButton = new JButton("Eliminar");
+		eliminarEliminarButton.setForeground(Color.RED);
+		eliminarButtonContainer.add(eliminarEliminarButton);
+		
+		JPanel eliminarButtonContainer2 = new JPanel();
+		panelEliminar.add(eliminarButtonContainer2);
+		eliminarButtonContainer2.setLayout(new BorderLayout(0, 0));
+		eliminarButtonContainer2.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		
+		JButton eliminarVolverButton = new JButton("Volver");
+		eliminarButtonContainer2.add(eliminarVolverButton, BorderLayout.WEST);
+		
+		
+		
+		
+		/*
+		 * SETEANDO LISTENERS EN EL PANEL PRINCIPAL
+		 */
+		
+		mainJugarButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cards.show(frame.getContentPane(), "panelJuego");				
+			}
+		});
+		mainEditarButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cards.show(frame.getContentPane(), "panelEditar");				
+			}
+		});
+		mainInfoButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cards.show(frame.getContentPane(), "panelInfo");				
+			}
+		});
+		
+		
+		
+		
+		/*
+		 * PREPARANDO Y SETEANDO COMPONENTES DEL PANEL DE JUEGO
+		 */
+		
 		String text;
 		if (logica.haySiguientePregunta()) {
 			text = "El instrumento " + logica.preguntaActual() + "?";
@@ -107,51 +245,14 @@ public class GUI {
 			text = "El instrumento es " + logica.preguntaActual() + "?";
 			estado = 1;
 		}
-		preguntaLabel.setText(text);
-		
-		JPanel panel_1 = new JPanel();
-		panel.add(panel_1);
-		
-		JSplitPane splitPane = new JSplitPane();
-		panelPrincipal.add(splitPane, BorderLayout.NORTH);
-		
-		JPanel panelInfo = new JPanel();
-		container.add(panelInfo, "panelInfo");
-		panelInfo.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panelEliminar = new JPanel();
-		container.add(panelEliminar, "panelEliminar");
-		panelEliminar.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_4 = new JPanel();
-		panelEliminar.add(panel_4);
-		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JLabel lblNewLabel_1 = new JLabel("Ingrese r\u00F3tulo del sub\u00E1rbol");
-		panel_4.add(lblNewLabel_1);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JPanel panel_3 = new JPanel();
-		panel_4.add(panel_3);
-		
-		JComboBox comboBoxEliminar = new JComboBox();
-		panel_3.add(comboBoxEliminar);
-		
-		
-		/*
-		 * TEXTFIELD PRINCIPAL (oyente principal)
-		 */
+		juegoLabelPregunta.setText(text);
 
-		textFieldPrincipal = new JTextField();
-		panel_1.add(textFieldPrincipal);
-		textFieldPrincipal.setColumns(30);
-		textFieldPrincipal.addActionListener(new ActionListener() {
+		juegoTextField.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String input = textFieldPrincipal.getText();
-				textFieldPrincipal.setText("");
+				String input = juegoTextField.getText();
+				juegoTextField.setText("");
 
 				boolean resuestaPorSiNo = false; //si es verdadero el usuario ingresó "si" ó "no", falso en caso contrario
 				boolean respuesta = false; //si es verdadero la respuesta fue "si", falso en caso contrario (asumiendo que respuestaPorSiNo es verdadero)
@@ -174,10 +275,10 @@ public class GUI {
 						catch (BoundaryViolationException ex) { ex.printStackTrace(); }
 						
 						if (logica.haySiguientePregunta()) { //sigo en un nodo interno, continúo preguntando
-							preguntaLabel.setText(preguntar());
+							juegoLabelPregunta.setText(preguntar());
 							estado = 0;
 						} else { //pasé a una hoja, trato de adivinar
-							preguntaLabel.setText(adivinar());
+							juegoLabelPregunta.setText(adivinar());
 							estado = 1;
 						}
 					}
@@ -188,96 +289,95 @@ public class GUI {
 							JOptionPane.showMessageDialog(null, "Adiviné!");
 							reiniciarJuego();
 						} else { //no adiviné
-							preguntaLabel.setText("En qué instrumento estabas pensando?");
+							juegoLabelPregunta.setText("En qué instrumento estabas pensando?");
 							estado = 2;
 						}
 					}
 					break;
 				case (2): 
-					preguntaLabel.setText("Y cual es la diferencia entre " + 
-							input + " y " + logica.preguntaActual() + "?");
-					nuevoInstrumento = input;
-					estado = 3;
+					if (!input.equals("")) {
+						juegoLabelPregunta.setText("Y cual es la diferencia entre " + 
+								input + " y " + logica.preguntaActual() + "?");
+						nuevoInstrumento = input;
+						estado = 3;
+					}
 					break;
 				case (3):
-					logica.agregarObjeto(nuevoInstrumento, input);
-					JOptionPane.showMessageDialog(null, "Jugá de nuevo!"); 					
-					reiniciarJuego(); 
+					if (!input.equals("")) {
+						logica.agregarObjeto(nuevoInstrumento, input);
+						JOptionPane.showMessageDialog(null, "Jugá de nuevo!"); 					
+						reiniciarJuego(); 
+					}
 					break;				
 				}				
 			}
 		});
 		
-		
-		/*
-		 * BOTONES ABRIR
-		 */
-		
-		JButton abrirInfoButton = new JButton("Info");
-		splitPane.setLeftComponent(abrirInfoButton);
-		abrirInfoButton.addActionListener(new ActionListener() {
-			
+		juegoVolverButton.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "panelInfo");
+				cards.show(frame.getContentPane(), "panelPrincipal");			
 			}
 		});
 		
-		JButton abrirEliminarButton = new JButton("Eliminar subárbol");
-		abrirEliminarButton.setForeground(Color.RED);
-		splitPane.setRightComponent(abrirEliminarButton);
-		abrirEliminarButton.addActionListener(new ActionListener() {
+		
+		
+		
+		
+		/*
+		 * SETEANDO LISTENERS EN EL PANEL PARA EDITAR Y VER INFO DE LA ESCTRUCTURA
+		 */
+		
+		editarMostrarNodosButton.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String info = ""; //esto se va a imprimir
+				Stack<Position<String>> pilaNodos = logica.pilaInternos();
+
+				while (!pilaNodos.isEmpty()) {
+					try {
+						info = info + pilaNodos.pop().element() + "\n";
+						System.out.println("a");
+					} catch (EmptyStackException ex) {}
+				}
+				if (info.equals(""))
+					info = "No hay nodos que mostrar";
+					
+				JOptionPane.showMessageDialog(null, info);
+			}
+		});
+		
+		editarMostrarDescripciones.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "panelEliminar");
+				String info = "";
+				for (String s : logica.generarDescripciones())
+					info = info + s + "\n"; 
+				JOptionPane.showMessageDialog(null, info);
+			}
+		});
+		
+		editarEliminarButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cards.show(frame.getContentPane(), "panelEliminar");	
 				
 				Stack<Position<String>> pilaNodos = logica.pilaInternos();
+				eliminarComboBox.removeAllItems();
+				eliminarComboBox.addItem(null);
 					
 				while (!pilaNodos.isEmpty()) {
 					try {
 						Position<String> pos = pilaNodos.pop();
-						comboBoxEliminar.addItem(pos.element());
+						eliminarComboBox.addItem(pos);
 					} catch (EmptyStackException ex) {}
 				}
 			}
 		});
 		
-		
 		/*
-		 * PANEL INFO
-		 */
-		
-		JButton infoVolverButton = new JButton("Volver");
-		infoVolverButton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelInfo.add(infoVolverButton, BorderLayout.SOUTH);
-		infoVolverButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "panelPrincipal");
-			}
-		});
-		
-		JPanel panel_2 = new JPanel();
-		panelInfo.add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JButton infoDescripcionObjetosButton = new JButton("Descripción de los objetos");
-		panel_2.add(infoDescripcionObjetosButton);
-		infoDescripcionObjetosButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				/*String info = "";
-				for (String s : logica.generarDescripciones())
-					info = info + s + "\n"; 
-				JOptionPane.showMessageDialog(null, info);*/
-			}
-		});
-		
-		JButton infoArbolButton = new JButton("Información sobre el árbol");
-		panel_2.add(infoArbolButton);
 		infoArbolButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -288,71 +388,67 @@ public class GUI {
 						"Cantidad de objetos: " + logica.cantidadObjetos(); 
 				JOptionPane.showMessageDialog(null, info);
 			}
-		});
+		});*/
 		
-		JButton infoMostrarNodosButton = new JButton("Mostrar nodos");
-		panel_2.add(infoMostrarNodosButton);
-		infoMostrarNodosButton.addActionListener(new ActionListener() {
-			
+		editarVolverButton.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String info = ""; //esto se va a imprimir
-				Stack<Position<String>> pilaNodos = logica.pilaInternos();
-				
-				if (pilaNodos.isEmpty()) //por debug
-					System.out.println("b");
-					
-				while (!pilaNodos.isEmpty()) {
-					try {
-						info = info + pilaNodos.pop().element() + "\n";
-						System.out.println("a");
-					} catch (EmptyStackException ex) {}
-				}
-				JOptionPane.showMessageDialog(null, info);
+				cards.show(frame.getContentPane(), "panelPrincipal");			
 			}
 		});
 		
 		
+		
+		
 		/*
-		 * PANEL ELIMINAR
+		 * SETEANDO LISTENERS PARA EL PANEL DE ELIMINAR SUBÁRBOL
 		 */
 		
-		JButton eliminarCancelarButton = new JButton("Cancelar");
-		eliminarCancelarButton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		panelEliminar.add(eliminarCancelarButton, BorderLayout.SOUTH);
-		eliminarCancelarButton.addActionListener(new ActionListener() {
-			
+		eliminarVolverButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cards.show(container, "panelPrincipal");
+				cards.show(frame.getContentPane(), "panelEditar");	
+			}
+		});
+
+		eliminarEliminarButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Position<String> item = (Position<String>) eliminarComboBox.getSelectedItem();
+				if (item != null) {
+					logica.eliminarSubarbol(item);
+					JOptionPane.showMessageDialog(null, item + " fue eliminado");
+
+					cards.show(frame.getContentPane(), "panelEditar");	
+				}
 			}
 		});
 		
 	}
 	
+
 	/*
-	 * Reincia la lógica y la interfaz para jugar de nuevo
+	 * METODOS AUXILIARES, PRIVADOS
 	 */
+	
+	//Reincia la lógica y la interfaz para jugar de nuevo
 	private void reiniciarJuego () {
 		logica.reiniciar();
 		
 		String text = logica.haySiguientePregunta() ? preguntar() : adivinar();
-		preguntaLabel.setText(text);
+		juegoLabelPregunta.setText(text);
 		
 		estado = logica.haySiguientePregunta() ? 0 : 1;
 	}
 	
-	/*
-	 * Devuelve la pregunta en cadena de caracteres
-	 */
+	//Devuelve la pregunta en cadena de caracteres
 	private String preguntar () {
 		return "El instrumento " + logica.preguntaActual() + "?";
 	}
 
-	/*
-	 * Devuelve el intento de adivinar en cadena de caracteres
-	 */
+	//Devuelve el intento de adivinar en cadena de caracteres
 	private String adivinar () {
 		return "El instrumento es " + logica.preguntaActual() + "?";
 	}
+
 }

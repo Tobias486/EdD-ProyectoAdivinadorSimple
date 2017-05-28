@@ -106,4 +106,8 @@ public class BTNodo<E> implements BTPosition<E> {
 	 */
 	public void setRight (BTPosition<E> right) { this.right = right; }
 	
+	public String toString () {
+		return elem.toString();
+	}
+	
 }
