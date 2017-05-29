@@ -177,6 +177,8 @@ public class LogicaAdivinador {
     }
     // Se llama a este mÃ©todo utilizando uno de las Positions presentes en pilaInternos
     public void eliminarSubarbol(Position<String> p){
+	objetos++;
+    	preguntas--;
     	try{
     		arbol.replace(p, getLeftmost(p));
     		if(arbol.hasLeft(p))
