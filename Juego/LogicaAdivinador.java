@@ -1,6 +1,6 @@
 package Juego;
 
-
+import java.io.*;
 import TDAArbolBinario.*;
 import TDALista.Lista;
 import TDALista.PositionList;
@@ -252,6 +252,31 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
     	} catch(EmptyTreeException e){}
     	return lista;
     }
-		
+	
+    public void grabarPartida(java.io.File file){
+    	try{
+    		ObjectOutputStream output = new ObjectOutputStream( new FileOutputStream( file ) );
+    	
+    		output.writeObject( arbol );
+    		output.writeObject( objetos);
+    		output.writeObject( preguntas);
+    		output.flush();
+    		output.close();
+    	}
+    	catch(IOException e){}
+    }
+    public void cargarPartida(java.io.File file){
+    	try{
+    		ObjectInputStream input = new ObjectInputStream( new FileInputStream(file) );
+    		arbol = (BinaryTree<String>) input.readObject();
+    		objetos = (int) input.readObject();
+    		preguntas = (int) input.readObject();
+    		input.close();
+    		pp = arbol.root();
+    	}
+    	catch(EmptyTreeException e){}
+    	catch(ClassNotFoundException e){}
+    	catch(IOException e){}
+    }	
 	
 }
