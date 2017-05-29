@@ -6,7 +6,7 @@ package TDAPila;
  *
  * @param <E>
  */
-public class Nodo<E> {
+public class Nodo<E> implements java.io.Serializable {
 
 	private E elem; //Elemento que encapsula el nodo
 	private Nodo<E> next; //Referencia al siguiente nodo
@@ -14,7 +14,7 @@ public class Nodo<E> {
 	// CONSTRUCTORES
 	
 	/**
-     * Constructor con dos par·metros formales que representan el elemento que encapsula el nodo y el nodo siguiente
+     * Constructor con dos par√°metros formales que representan el elemento que encapsula el nodo y el nodo siguiente
 	 * @param elem, elemento que encapsula el nodo
 	 * @param next, referencia al siguiente nodo
 	 */
@@ -24,7 +24,7 @@ public class Nodo<E> {
 	}
 	
 	/**
-     * Constructor con un par·metro formal que representa el elemento que encapsula el nodo
+     * Constructor con un par√°metro formal que representa el elemento que encapsula el nodo
 	 * @param elem, elemento que elcapsula el nodo
 	 */
 	public Nodo (E elem) {
@@ -40,7 +40,7 @@ public class Nodo<E> {
 	public E getElement () { return elem; }
 	
 	/**
-	 * Consulta el nodo al cual est· apuntando
+	 * Consulta el nodo al cual est√° apuntando
 	 * @return nodo siguiente
 	 */
 	public Nodo<E> getNext () { return next; }
