@@ -4,14 +4,14 @@ import java.util.NoSuchElementException;
 
 /**
  * Iterador que implementa la interfaz Iterator que se encarga de recorrer una lista
- * @author Tob�as Molina Blanco
+ * @author Tobías Molina Blanco
  *
  * @param <E>
  */
 
-public class ElementIterator<E> implements Iterator<E> {
+public class ElementIterator<E> implements Iterator<E>, java.io.Serializable {
     
-    Position<E> cursor; // Cursor que indica la siguiente posición a devolver
+    Position<E> cursor; // Cursor que indica la siguiente posiciÃ³n a devolver
     PositionList<E> lista; // Lista que se recorre
     
     
