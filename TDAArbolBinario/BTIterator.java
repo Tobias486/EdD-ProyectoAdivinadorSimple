@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import TDAPila.*;
 
-public class BTIterator<E> implements Iterator<E> {
+public class BTIterator<E> implements Iterator<E>, java.io.Serializable {
     Stack<Position<E>> p;
     ArbolBinario<E> arbol;
     Position<E> cursor;
