@@ -2,11 +2,11 @@ package TDAArbolBinario;
 
 /**
  * Clase que implementa la interfaz BTPosition de Arbol Binaro
- * @author Tobías Molina Blanco, Teo Vogel
+ * @author TobÃ­as Molina Blanco, Teo Vogel
  * @param <E>
  */
 
-public class BTNodo<E> implements BTPosition<E> {
+public class BTNodo<E> implements BTPosition<E>, java.io.Serializable {
 
 	private BTPosition<E> parent, left, right; //referencias al nodo padre y nodos hijos
 	private E elem; //elemento encapsulado por el nodo
@@ -49,7 +49,7 @@ public class BTNodo<E> implements BTPosition<E> {
 	}
 	
 	/**
-	 * Constructor vacío
+	 * Constructor vacÃ­o
 	 */
 	public BTNodo () {
 		elem = null;
