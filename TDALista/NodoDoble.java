@@ -1,23 +1,23 @@
 package TDALista;
 
 /**
- * Nodo que encapsula un elemento genÈrico y mantiene referencias hacia un nodo previo y otro sucesor
+ * Nodo que encapsula un elemento gen√©rico y mantiene referencias hacia un nodo previo y otro sucesor
  *  
- * @author TobÌas Molina Blanco
+ * @author Tob√≠as Molina Blanco
  *
  * @param <E>
  */
 
-public class NodoDoble<E> implements Position<E> {
+public class NodoDoble<E> implements Position<E>, java.io.Serializable {
     
     NodoDoble<E> siguiente; // Referencia al siguiente nodo
     NodoDoble<E> anterior; // Referencia al nodo anterior
-    E elemento; // Elemento genÈrico de tipo E que contiene el nodo.
+    E elemento; // Elemento gen√©rico de tipo E que contiene el nodo.
     
     //CONSTRUCTORES
     
     /**
-     * Constructor sin par·metros formales
+     * Constructor sin par√°metros formales
      */
     public NodoDoble(){
         elemento = null;
@@ -26,7 +26,7 @@ public class NodoDoble<E> implements Position<E> {
     }
     
     /**
-     * Constructor con un par·metro formal que representa el elemento que encapsula el nodo
+     * Constructor con un par√°metro formal que representa el elemento que encapsula el nodo
      * @param el, elemento que encapsula el nodo
      */
     public NodoDoble(E el){
@@ -36,7 +36,7 @@ public class NodoDoble<E> implements Position<E> {
     }
     
     /**
-     * Constructor con tres par·metros formales que representan el elemento que encapsula  el nodo y los nodos adyacentes
+     * Constructor con tres par√°metros formales que representan el elemento que encapsula  el nodo y los nodos adyacentes
      * @param el, elemento que encapsula el nodo
      * @param ant, referencia al nodo anterior
      * @param sig, referencia al nodo siguiente
@@ -48,7 +48,7 @@ public class NodoDoble<E> implements Position<E> {
     }
     
     /**
-     * Constructor con dos par·metros formales que representan los nodos adyacentes.
+     * Constructor con dos par√°metros formales que representan los nodos adyacentes.
      * @param ant, referencia al nodo anterior
      * @param sig, referencia al nodo siguiente
      */
