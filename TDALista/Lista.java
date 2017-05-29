@@ -4,19 +4,19 @@ import java.util.NoSuchElementException;
 
 /**
  * Estructura iterable de una lista que implementa la interfaz PositionList
- * @author TobÌas Molina Blanco
+ * @author Tob√≠as Molina Blanco
  *
  * @param <E>
  */
 
-public class Lista<E> implements PositionList<E> {
+public class Lista<E> implements PositionList<E>, java.io.Serializable {
 
     private int longitud; // Atributo que lleva la cuenta de la cantidad de elementos en la lista
     private NodoDoble<E> head; // Nodo centinela al principio de la lista
     private NodoDoble<E> tail; // Nodo centinela al final de la lista
 
     /**
-     * Constructor vacÌo
+     * Constructor vac√≠o
      */
     public Lista(){
         longitud = 0;
@@ -28,10 +28,10 @@ public class Lista<E> implements PositionList<E> {
     }
 
     /**
-     * Verifica que la posiciÛn pasada por pr·metro no sea nula, diferente a los centinelas y de tipo NodoDoble (adem·s de verificar que la lista no estÈ vacÌa)
-     * @param p, posiciÛn a verificar
-     * @return el nodo al cual apuntaba la posiciÛn
-     * @throws InvalidPositionException si la posiciÛn no cumple con las mencionadas condiciones
+     * Verifica que la posici√≥n pasada por pr√°metro no sea nula, diferente a los centinelas y de tipo NodoDoble (adem√°s de verificar que la lista no est√© vac√≠a)
+     * @param p, posici√≥n a verificar
+     * @return el nodo al cual apuntaba la posici√≥n
+     * @throws InvalidPositionException si la posici√≥n no cumple con las mencionadas condiciones
      */
     protected NodoDoble<E> checkPosition(Position<E> p) throws InvalidPositionException{
         if(p == null || isEmpty())
