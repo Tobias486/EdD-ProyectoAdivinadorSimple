@@ -1,19 +1,19 @@
 package TDAPila;
 
 /**
- * Implementación de la interfaz Stack
+ * ImplementaciÃ³n de la interfaz Stack
  * @author Teo Vogel
  *
  * @param <E>
  */
 
-public class Pila<E> implements Stack<E> {
+public class Pila<E> implements Stack<E>, java.io.Serializable {
 
 	private Nodo<E> head; //Referencia al elemento en el tope de la pila
 	private int size; //Cantidad de elementos en la pila
 
 	/**
-	 * Constructor vacío
+	 * Constructor vacÃ­o
 	 */
 	public Pila () {
 		head = null;
