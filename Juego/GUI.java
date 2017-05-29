@@ -27,6 +27,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
