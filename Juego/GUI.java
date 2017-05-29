@@ -220,7 +220,8 @@ public class GUI {
 		
 		mainJugarButton.addActionListener(new ActionListener() {			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {			
+				reiniciarJuego();				
 				cards.show(frame.getContentPane(), "panelJuego");				
 			}
 		});
@@ -243,15 +244,6 @@ public class GUI {
 		/*
 		 * PREPARANDO Y SETEANDO COMPONENTES DEL PANEL DE JUEGO
 		 */
-		
-		String text;
-		if (logica.haySiguientePregunta()) {
-			text = "El instrumento " + logica.preguntaActual() + "?";
-		} else {
-			text = "El instrumento es " + logica.preguntaActual() + "?";
-			estado = 1;
-		}
-		juegoLabelPregunta.setText(text);
 
 		juegoTextField.addActionListener(new ActionListener() {
 			
