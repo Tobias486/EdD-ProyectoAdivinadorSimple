@@ -4,34 +4,20 @@ import java.io.*;
 import TDAArbolBinario.*;
 import TDALista.Lista;
 import TDALista.PositionList;
-
-/*USANDO LOS QUICKFIXES DE ECLIPSE SE IMPORTARON LAS SIGUIENTES COSAS, SIN EMBARGO, NO SÃ‰ COMO SE IMPORTA DE MANERA MÃ�S COMPRIMIDA
-PERO CREO QUE VOS SÃ�
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-import TDAArbolBinario.*;
-import TDAArbolBinario.BoundaryViolationException;
-import TDAArbolBinario.InvalidPositionException;
-import TDAArbolBinario.Position;
-import TDAPila.Pila;
-import TDAPila.Stack;
-*/
-
-/*
- * CREO QUE LOS ÚNICOS NECESARIOS ADICIONALES SON LOS SIGUIENTES:
- */
 import TDAPila.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class LogicaAdivinador {
-    BinaryTree<String> arbol;
-    Position<String> pp;
+    BinaryTree<String> arbol; //estructura de datos que almacena la información de la partida
+    Position<String> pp; //posición en la que se encuentra la partida
     
-    int objetos;
-    int preguntas;
+    int objetos; //cantidad de objetos en la partida
+    int preguntas; //cantidad de preguntas en la partida
     
+    /**
+     * Contructor vacío
+     */
     public LogicaAdivinador(){
         arbol = new ArbolBinario<String>();
         objetos = 1;
@@ -41,7 +27,11 @@ public class LogicaAdivinador {
         } catch (InvalidOperationException e){}
     }
     
-    
+    /**
+     * Cambia la posición de la partida a la siguiente pregunta dependiendo del dato pasado por parámetro
+     * @param resp de tipo boolean, falso indica que el usuario respondió por "No" y debe ir a la posición correspondiente, true para el caso contrario
+     * @throws BoundaryViolationException cuando se llama a este método con la partida habiendo llegado al punto de adivinar
+     */
     public void siguientePregunta(boolean resp) throws BoundaryViolationException{
         try {
             if(resp)
@@ -53,6 +43,10 @@ public class LogicaAdivinador {
     
     }
     
+    /**
+     * Consulta si la partida está en una posición donde hay una siguiente pregunta por hacer
+     * @return true si hay una siguiente pregunta por hacer, false si no hay más preguntas y solo queda adivinar
+     */
     public boolean haySiguientePregunta(){
         boolean hay = false;
         try{
@@ -65,6 +59,9 @@ public class LogicaAdivinador {
             
     }
     
+    /**
+     * Reinicia la partida a la primer posición
+     */
     public void reiniciar(){
         try{
             pp = arbol.root();
@@ -72,10 +69,19 @@ public class LogicaAdivinador {
         catch(EmptyTreeException e){}
     }
     
+    /**
+     * Consulta la pregunta (el instrumento) en donde se encuentra la partida 
+     * @return la pregunta en forma de String. Si la partida está en una posición donde solo queda adivinar el método devuelve el instrumento en un intento por adivinar
+     */
     public String preguntaActual(){
         return pp.element();
     }
     
+    /**
+     * Método que añade un nuevo instrumento para que el adivinador aprenda
+     * @param obj nuevo instrumento
+     * @param dif diferencia con el instrumento en donde la partida está parada
+     */
     public void agregarObjeto(String obj, String dif) {
         String rotulo = pp.element();
         try {
@@ -88,15 +94,27 @@ public class LogicaAdivinador {
         objetos++;
         preguntas++;
     }
-    	// consulta para la cantidad de objetos
+
+    /**
+     * Consulta la cantidad de objetos en la partida
+     * @return cantidad de objetos en la partida
+     */
     public int cantidadObjetos(){
     	return objetos;
     }
-	// consulta para la cantidad de preguntas
+
+    /**
+     * Consulta la cantidad de preguntas en la partida
+     * @return cantidad de preguntas en la partida
+     */
     public int cantidadPreguntas(){
     	return preguntas;
     }
-    // consulta la altura del árbol
+
+    /**
+     * Consulta la altura de la estructura de datos que almacena los datos de la partida
+     * @return la altura de la estructura de datos que almacena los datos de la partida
+     */
     public int alturaArbol(){
     	try {
 			return alturaArbolAux(arbol.root(), 0);
@@ -104,7 +122,13 @@ public class LogicaAdivinador {
     	
     	return 0;
     }
-    // método auxiliar, privado para calcular la altura del árbol
+    
+     /**
+      * Método auxiliar, privado para calcular la altura del árbol
+      * @param pos posición desde donde se desea calcular la altura
+      * @param i profundidad de la posición pasada por parámetro
+      * @return la profundidad de la posición pasada por parámetro
+      */
     private int alturaArbolAux(Position<String> pos, int i) {
     	try {
 			return Math.max(
@@ -117,8 +141,11 @@ public class LogicaAdivinador {
     	
     	return 0;
     }
-	// Devuelve una pila con las positions de los nodos internos, en el pdf dice que se debe usar una pila, puedo cambiarlo
-	// para que devuelva una lista con las posiciones invertidas, pero eso depende de como se vaya a hacer en la GUI
+    
+    /**
+     * Devuelve una pila con los nodos internos de la estructura de datos
+     * @return una pila con los nodos internos 
+     */
     public Stack<Position<String>> pilaInternos(){
     	Iterable<Position<String>> nodosArbol = arbol.positions();
     	Stack<Position<String>> internos = new Pila<Position<String>>();
@@ -140,7 +167,11 @@ public class LogicaAdivinador {
     	return internos;
     }
 	
-	// metodo privado para conseguir el elemento que va a reemplazar al rotulo de la pregunta eliminada
+    /**
+     * Método privado para conseguir el elemento que va a reemplazar al rótulo de la pregunta eliminada
+     * @param p 
+     * @return
+     */
     private String getLeftmost(Position<String> p){
     	String s="";
     	try{
@@ -155,7 +186,10 @@ public class LogicaAdivinador {
     	
     	return s;
     }
-    //metodo privado que borra todo un subarbol con raiz p
+    /**
+     * Método privado que borra todo un subárbol cuya raíz es pasada por parámetro
+     * @param p la raíz del subárbol a eliminar
+     */
     private void auxEliminar(Position<String> p){
     	try{
 	    	if(arbol.isInternal(p)){
@@ -171,11 +205,16 @@ public class LogicaAdivinador {
 	    	
 	    	arbol.remove(p);
 	    	
-    	}catch(InvalidPositionException e){System.out.println("IPS");}
+    	}
+    	catch(InvalidPositionException e){System.out.println("IPS");}
     	catch(BoundaryViolationException e){System.out.println("BVE");}
     	catch(InvalidOperationException e){System.out.println("IOE");}
     }
-    // Se llama a este mÃ©todo utilizando uno de las Positions presentes en pilaInternos
+    
+    /**
+     * Método que elimina un subárbol cuya raíz es pasada por parámetro
+     * @param p raíz del subárbol
+     */
     public void eliminarSubarbol(Position<String> p){
 	objetos++;
     	preguntas--;
@@ -190,8 +229,14 @@ public class LogicaAdivinador {
 	    catch(InvalidPositionException e){}
 	    catch(BoundaryViolationException e){}
     }
-	// Toda la recursion que forma las descripciones
-private void auxDescripciones (PositionList<String> descs, String s, Position<String> p){
+
+    /**
+     * Método auxiliar para generar las descripciones
+     * @param descs
+     * @param s
+     * @param p
+     */
+    private void auxDescripciones (PositionList<String> descs, String s, Position<String> p){
     	try{
     		if(arbol.isExternal(p)){
     			descs.addLast(p.element());
@@ -236,10 +281,11 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
     	catch(InvalidPositionException e){}
     	catch(BoundaryViolationException e){}
     }
-    /*
-    Este es el metodo que hay que llamar para que te de las descripciones
-    
-    */
+
+    /**
+     * Método que devuelve la descripción de cada instrumento de la partida
+     * @return una estructura iterable que contiene las descripciones
+     */
     public Iterable<String> generarDescripciones(){
     	PositionList<String> lista = new Lista<String>();
     	try{
@@ -253,6 +299,10 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
     	return lista;
     }
 	
+    /**
+     * Método que genera un archivo de partida
+     * @param file dirección del archivo de partida en el sistema
+     */
     public void grabarPartida(java.io.File file){
     	try{
     		ObjectOutputStream output = new ObjectOutputStream( new FileOutputStream( file ) );
@@ -265,6 +315,11 @@ private void auxDescripciones (PositionList<String> descs, String s, Position<St
     	}
     	catch(IOException e){}
     }
+    
+    /**
+     * Método que carga un archivo de partida
+     * @param file dirección del archivo de partida en el sistema
+     */
     public void cargarPartida(java.io.File file){
     	try{
     		ObjectInputStream input = new ObjectInputStream( new FileInputStream(file) );

@@ -59,7 +59,7 @@ public class ArbolBinario<E> implements BinaryTree<E>, java.io.Serializable {
 	}
 	
     /**
-     * Verifica que la posición pasada por prámetro no sea nula y del tipo correcto (además de verificar que el árbol no esté vacío)
+     * Verifica que la posición pasada por parámetro no sea nula y del tipo correcto (además de verificar que el árbol no esté vacío)
      * @param p, posición a verificar
      * @return el nodo al cual apuntaba la posición
      * @throws InvalidPositionException si la posición no cumple con las mencionadas condiciones

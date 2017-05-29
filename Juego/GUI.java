@@ -52,7 +52,7 @@ public class GUI {
 	
 
 	/**
-	 * Launch the application.
+	 * Lanza el juego
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -68,7 +68,7 @@ public class GUI {
 	}
 
 	/**
-	 * Create the application.
+	 * Constructor vacío de la interfaz
 	 */
 	public GUI() {
 		initialize();
@@ -178,13 +178,20 @@ public class GUI {
 		
 		JPanel panelInfo = new JPanel();
 		frame.getContentPane().add(panelInfo, "panelInfo");
+		panelInfo.setLayout(null);
+		
+		JButton infoVolverButton = new JButton("Volver");
+		infoVolverButton.setBounds(10, 227, 89, 23);
+		panelInfo.add(infoVolverButton);
+		
+		
 		
 		JPanel panelEliminar = new JPanel();
 		frame.getContentPane().add(panelEliminar, "panelEliminar");
 		panelEliminar.setLayout(new GridLayout(4, 0, 0, 0));
 		
 		JLabel eliminarLabel = new JLabel("");
-		eliminarLabel.setText("<html>Seleccione el rótulo del subárbol que desea eliminar<br>(estos cambos no se pueden deshacer)</html>");
+		eliminarLabel.setText("<html>Seleccione el rótulo del subárbol que desea eliminar<br>(estos cambios no se pueden deshacer)</html>");
 		eliminarLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		eliminarLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelEliminar.add(eliminarLabel);
@@ -242,7 +249,7 @@ public class GUI {
 		
 		
 		/*
-		 * PREPARANDO Y SETEANDO COMPONENTES DEL PANEL DE JUEGO
+		 * SETEANDO COMPONENTES DEL PANEL DE JUEGO
 		 */
 
 		juegoTextField.addActionListener(new ActionListener() {
@@ -369,7 +376,6 @@ public class GUI {
 				while (!pilaNodos.isEmpty()) {
 					try {
 						info = info + pilaNodos.pop().element() + "\n";
-						System.out.println("a");
 					} catch (EmptyStackException ex) {}
 				}
 				if (info.equals(""))
@@ -464,6 +470,19 @@ public class GUI {
 			}
 		});
 		
+		
+		
+		/*
+		 * SETEANDO LISTENERS DEL PANEL DE INFO
+		 */
+		
+		infoVolverButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cards.show(frame.getContentPane(), "panelPrincipal");	
+			}
+		});
+		
 	}
 	
 
@@ -471,7 +490,9 @@ public class GUI {
 	 * METODOS AUXILIARES, PRIVADOS
 	 */
 	
-	//Reincia la lógica y la interfaz para jugar de nuevo
+	/**
+	 * Reincia la lógica y la interfaz para jugar de nuevo
+	 */
 	private void reiniciarJuego () {
 		logica.reiniciar();
 		
@@ -481,12 +502,18 @@ public class GUI {
 		estado = logica.haySiguientePregunta() ? 0 : 1;
 	}
 	
-	//Devuelve la pregunta en cadena de caracteres
+	/**
+	 * Devuelve la pregunta en cadena de caracteres
+	 * @return la pregunta en cadena de caracteres
+	 */
 	private String preguntar () {
 		return "El instrumento " + logica.preguntaActual() + "?";
 	}
 
-	//Devuelve el intento de adivinar en cadena de caracteres
+	/**
+	 * Devuelve el intento de adivinar en cadena de caracteres
+	 * @return el intento de adivinar en cadena de caracteres
+	 */
 	private String adivinar () {
 		return "El instrumento es " + logica.preguntaActual() + "?";
 	}
