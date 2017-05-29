@@ -29,6 +29,7 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GUI {
 
@@ -333,6 +334,16 @@ public class GUI {
 		editarSalvarButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de partida", "dat");
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(filter);
+				
+				if(fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
+					java.io.File file = fileChooser.getSelectedFile();
+					System.out.println(file.getPath());
+					logica.grabarPartida(file);
+				}
+				
 				
 				
 			}
@@ -341,7 +352,15 @@ public class GUI {
 		editarCargarButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de partida", "dat");
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileFilter(filter);
 				
+				if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+					java.io.File file = fileChooser.getSelectedFile();
+					System.out.println(file.getPath());
+					logica.cargarPartida(file);
+				}
 				
 			}
 		});
