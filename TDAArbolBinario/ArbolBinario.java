@@ -13,7 +13,7 @@ import TDALista.Lista;
  * @param <E>
  */
 
-public class ArbolBinario<E> implements BinaryTree<E> {
+public class ArbolBinario<E> implements BinaryTree<E>, java.io.Serializable {
 
 	private BTNodo<E> root; //referencia a la raíz del árbol
 	private int size; //cantidad de nodos del árbol
