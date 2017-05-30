@@ -335,5 +335,17 @@ public class LogicaAdivinador {
     	catch(ClassNotFoundException e){}
     	catch(IOException e){}
     }	
+    
+    /**
+     * Reinicia la partida
+     */
+    public void clear () {
+        arbol = new ArbolBinario<String>();
+        objetos = 1;
+        preguntas = 0;
+        try {
+            pp = arbol.createRoot("una guitarra");
+        } catch (InvalidOperationException e){}    	
+    }
 	
 }

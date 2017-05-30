@@ -18,6 +18,7 @@ import TDAPila.Stack;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -101,8 +102,8 @@ public class GUI {
 		panelPrincipal.setLayout(new BorderLayout(0, 0));
 		panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		JLabel lblNewLabel = new JLabel("Titulo");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		JLabel lblNewLabel = new JLabel("I.G.N.A.C.I.O, el adivinador simple");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panelPrincipal.add(lblNewLabel, BorderLayout.NORTH);
 		
@@ -148,7 +149,7 @@ public class GUI {
 		
 		JPanel panelEditar = new JPanel();
 		frame.getContentPane().add(panelEditar, "panelEditar");
-		panelEditar.setLayout(new GridLayout(7, 0, 0, 5));
+		panelEditar.setLayout(new GridLayout(8, 0, 0, 2));
 		panelEditar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		JButton editarCargarButton = new JButton("Cargar partida");
@@ -170,6 +171,11 @@ public class GUI {
 		editarEliminarButton.setForeground(Color.RED);
 		panelEditar.add(editarEliminarButton);
 		
+		JButton editarReiniciarButton = new JButton("Reinciar partida");
+		editarReiniciarButton.setForeground(Color.RED);
+		editarEliminarButton.setForeground(Color.RED);
+		panelEditar.add(editarReiniciarButton);
+		
 		JPanel editarButtonContainer = new JPanel();
 		panelEditar.add(editarButtonContainer);
 		editarButtonContainer.setLayout(new BorderLayout(0, 0));
@@ -179,13 +185,21 @@ public class GUI {
 		
 		JPanel panelInfo = new JPanel();
 		frame.getContentPane().add(panelInfo, "panelInfo");
-		panelInfo.setLayout(null);
+		panelInfo.setLayout(new BorderLayout(0, 0));
+		panelInfo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		JButton infoVolverButton = new JButton("Volver");
-		infoVolverButton.setBounds(10, 227, 89, 23);
-		panelInfo.add(infoVolverButton);
+		panelInfo.add(infoVolverButton, BorderLayout.SOUTH);
 		
+		JLabel infoLabel = new JLabel("<html>Tobías Molina Blanco: <br> * LU: 114766 <br><br>Teo Vogel: <br> * LU: 114313<html>");
+		infoLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		panelInfo.add(infoLabel, BorderLayout.CENTER);
 		
+		JLabel lblNewLabel_1 = new JLabel("Integrantes");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		panelInfo.add(lblNewLabel_1, BorderLayout.NORTH);
 		
 		JPanel panelEliminar = new JPanel();
 		frame.getContentPane().add(panelEliminar, "panelEliminar");
@@ -342,6 +356,7 @@ public class GUI {
 				
 				if(fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
 					java.io.File file = fileChooser.getSelectedFile();
+					file = new File(file.getAbsolutePath() + ".dat");
 					logica.grabarPartida(file);
 				}
 				
@@ -420,6 +435,15 @@ public class GUI {
 						eliminarComboBox.addItem(pos);
 					} catch (EmptyStackException ex) {}
 				}
+			}
+		});
+		
+		editarReiniciarButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				logica.clear();
+				JOptionPane.showMessageDialog(null, "Se reinició la partida");
 			}
 		});
 		
@@ -516,5 +540,4 @@ public class GUI {
 	private String adivinar () {
 		return "El instrumento es " + logica.preguntaActual() + "?";
 	}
-
 }
