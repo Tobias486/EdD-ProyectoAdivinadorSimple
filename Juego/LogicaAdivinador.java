@@ -39,7 +39,9 @@ public class LogicaAdivinador {
             else
                pp = arbol.left(pp);
         }
-        catch(InvalidPositionException e){}
+        catch(InvalidPositionException e){
+        	System.out.println("No hay siguiente pregunta!");
+        }
     
     }
     
@@ -169,8 +171,8 @@ public class LogicaAdivinador {
 	
     /**
      * Método privado para conseguir el elemento que va a reemplazar al rótulo de la pregunta eliminada
-     * @param p 
-     * @return
+     * @param p Raíz del subárbol en el que se realiza la búsqueda
+     * @return Rótulo de la hoja que se encuentra más a la izquierda en el subárbol
      */
     private String getLeftmost(Position<String> p){
     	String s="";
@@ -232,9 +234,9 @@ public class LogicaAdivinador {
 
     /**
      * Método auxiliar para generar las descripciones
-     * @param descs
-     * @param s
-     * @param p
+     * @param descs Lista en la que se almacenarán los objetos y sus respectivas descripciones
+     * @param s Concatenación de características de un objeto.
+     * @param p Posición 
      */
     private void auxDescripciones (PositionList<String> descs, String s, Position<String> p){
     	try{
