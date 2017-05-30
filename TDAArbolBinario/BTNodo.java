@@ -1,14 +1,14 @@
 package TDAArbolBinario;
 
 /**
- * Clase que implementa la interfaz BTPosition de Arbol Binaro
+ * Clase que implementa la interfaz BTNodo de Arbol Binaro
  * @author Tobías Molina Blanco, Teo Vogel
  * @param <E>
  */
 
-public class BTNodo<E> implements BTPosition<E>, java.io.Serializable {
+public class BTNodo<E> implements Position<E>, java.io.Serializable {
 
-	private BTPosition<E> parent, left, right; //referencias al nodo padre y nodos hijos
+	private BTNodo<E> parent, left, right; //referencias al nodo padre y nodos hijos
 	private E elem; //elemento encapsulado por el nodo
 	
 	/**
@@ -18,7 +18,7 @@ public class BTNodo<E> implements BTPosition<E>, java.io.Serializable {
 	 * @param left referencia al nodo hijo izquierdo
 	 * @param right referencia al nodo hijo derecho
 	 */
-	public BTNodo (E elem, BTPosition<E> parent, BTPosition<E> left, BTPosition<E> right) {
+	public BTNodo (E elem, BTNodo<E> parent, BTNodo<E> left, BTNodo<E> right) {
 		this.elem = elem;
 		this.parent = parent;
 		this.left = left;
@@ -30,7 +30,7 @@ public class BTNodo<E> implements BTPosition<E>, java.io.Serializable {
 	 * @param elem elemento encapsulado por el nodo
 	 * @param parent referencia al nodo padre
 	 */
-	public BTNodo(E elem, BTPosition<E> parent){
+	public BTNodo(E elem, BTNodo<E> parent){
 		this.elem = elem;
 		this.parent = parent;
 		this.left = null;
@@ -68,19 +68,19 @@ public class BTNodo<E> implements BTPosition<E>, java.io.Serializable {
 	 * Consulta el nodo padre
 	 * @return referencia al nodo padre
 	 */
-	public BTPosition<E> getParent () { return parent; }
+	public BTNodo<E> getParent () { return parent; }
 	
 	/**
 	 * Consulta el nodo hijo izquierdo
 	 * @return referencia al nodo hijo izquierdo
 	 */
-	public BTPosition<E> getLeft () { return left; }
+	public BTNodo<E> getLeft () { return left; }
 	
 	/**
 	 * Consulta el nodo hijo derecho
 	 * @return referencia al nodo hijo derecho
 	 */
-	public BTPosition<E> getRight () { return right; }
+	public BTNodo<E> getRight () { return right; }
 	
 	/**
 	 * Modifica el elemento encapsulado por el nodo
@@ -92,19 +92,19 @@ public class BTNodo<E> implements BTPosition<E>, java.io.Serializable {
 	 * Modifica (cambia) el nodo padre
 	 * @param parent referencia al nuevo padre
 	 */
-	public void setParent (BTPosition<E> parent) { this.parent = parent; }
+	public void setParent (BTNodo<E> parent) { this.parent = parent; }
 	
 	/**
 	 * Modifica (cambia) el nodo hijo izquierdo
 	 * @param left referencia al hijo izquierdo
 	 */
-	public void setLeft (BTPosition<E> left) { this.left = left; }
+	public void setLeft (BTNodo<E> left) { this.left = left; }
 
 	/**
 	 * Modifica (cambia) el nodo hijo derecho
 	 * @param left referencia al hijo derecho
 	 */
-	public void setRight (BTPosition<E> right) { this.right = right; }
+	public void setRight (BTNodo<E> right) { this.right = right; }
 	
 	public String toString () {
 		return elem.toString();
