@@ -3,9 +3,6 @@ package TDAArbolBinario;
 import java.util.Iterator;
 import TDALista.Lista;
 
-// TODO: cambiar todos los tipos estáticos del TDA por BTNodo o BTPosition (checkPosition debe retornar el tipo idéntico)
-// TODO: comentar los métodos privados restantes (luego les doy forma de JavaDoc)
-
 /**
  * Estructura iterable de un árbol que implementa la interfaz BinaryTree
  * @author Tobías Molina Blanco, Teo Vogel
@@ -95,8 +92,8 @@ public class ArbolBinario<E> implements BinaryTree<E>, java.io.Serializable {
 		if (aux.getLeft() != null && aux.getRight() != null)
 			throw new InvalidOperationException();
 		
-		BTPosition<E> padre = aux.getParent();
-		BTPosition<E> hijo = (aux.getLeft() != null) ? aux.getLeft() : aux.getRight();
+		BTNodo<E> padre = aux.getParent();
+		BTNodo<E> hijo = (aux.getLeft() != null) ? aux.getLeft() : aux.getRight();
 		
 		if(aux == root && hijo == null)
 			root = null;
@@ -166,12 +163,24 @@ public class ArbolBinario<E> implements BinaryTree<E>, java.io.Serializable {
 		return ver.getRight();
 	}
 
-	private BTPosition<E> clonePosition(BTPosition<E> p){
+	/**
+	 * Método auxiliar para clonar una posición
+	 * @param p posición a clonar
+	 * @return un BTNodo con el mismo estado interno que el nodo al que apuntaba la posición recibida como parámetro 
+	 */
+	private BTNodo<E> clonePosition(BTNodo<E> p){
         return new BTNodo<E>(p.element());
     }
     
-    private BTPosition<E> cloneSubtree(BTPosition<E> raiz, BinaryTree<E> T)throws InvalidPositionException{
-        BTPosition<E> clon = clonePosition(raiz);
+	/**
+	 * Clona el subárbol cuya raíz, pertenenciente al árbol pasado por parámetro, es pasada por parámetro 
+	 * @param raiz raíz del subárbol a clonar
+	 * @param T árbol al cual pertenece la raíz
+	 * @return referencia a la raíz de la copia del subárbol
+	 * @throws InvalidPositionException si la raíz no pertenece al árbol pasado por parámetro o es inválida
+	 */
+    private BTNodo<E> cloneSubtree(BTNodo<E> raiz, BinaryTree<E> T)throws InvalidPositionException{
+        BTNodo<E> clon = clonePosition(raiz);
         try {
             if(T.hasLeft(raiz)) {
                 clon.setLeft(cloneSubtree(checkPosition(T.left(raiz)),T));
@@ -187,8 +196,8 @@ public class ArbolBinario<E> implements BinaryTree<E>, java.io.Serializable {
     }
     
     public void Attach(Position<E> v, BinaryTree<E> T1, BinaryTree<E> T2) throws InvalidPositionException {
-          BTPosition<E> ver = checkPosition(v);
-          BTPosition<E> meter;
+          BTNodo<E> ver = checkPosition(v);
+          BTNodo<E> meter;
           
           try {
           if(!isExternal(ver))
@@ -212,6 +221,12 @@ public class ArbolBinario<E> implements BinaryTree<E>, java.io.Serializable {
         return new BTIterator<E>(this);
     }
     
+    /**
+     * Método que recorre el subárbol con raíz pasada por parámetro que almacena las positions de los nodos dentro de la lista pasada por parámetro en preorden
+     * @param v Raíz del subárbol a recorrer
+     * @param a Lista en la que se almacenan las positions de los nodos
+     * @throws InvalidPositionException si la position pasada por parámetros es inválida
+     */
     private void DFS(Position<E> v, Lista<Position<E>> a) throws InvalidPositionException{
         a.addLast(v);
         try{
