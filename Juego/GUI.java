@@ -41,6 +41,7 @@ public class GUI {
 	
 	private LogicaAdivinador logica;
 	
+	
 	/*
 	 * 0: preguntando; (esperando "si" o "no")
 	 * 1: adivinando; (esperando "si" o "no")
@@ -341,6 +342,7 @@ public class GUI {
 				
 				if(fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION){
 					java.io.File file = fileChooser.getSelectedFile();
+					System.out.println(file.getPath());
 					logica.grabarPartida(file);
 				}
 				
@@ -358,6 +360,7 @@ public class GUI {
 				
 				if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 					java.io.File file = fileChooser.getSelectedFile();
+					System.out.println(file.getPath());
 					logica.cargarPartida(file);
 				}
 				
