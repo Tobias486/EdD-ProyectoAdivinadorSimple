@@ -168,6 +168,31 @@ public class LogicaAdivinador {
  
     	return internos;
     }
+    
+    /**
+     * Devuelve una pila con los rótulos de los nodos internos de la estructura de datos
+     * @return una pila con los rótulos de los nodos internos 
+     */
+    public Stack<String> pilaRotulosInternos(){
+    	Iterable<Position<String>> nodosArbol = arbol.positions();
+    	Stack<String> internos = new Pila<String>();
+
+    	Iterator<Position<String>> it = nodosArbol.iterator();
+    	Position<String> meterP;
+    	
+    	try{
+	    	while(it.hasNext()){
+	    		meterP = it.next();
+	    		
+		    	if(arbol.isInternal(meterP))
+		    		internos.push(meterP.element());
+    		}
+    	}
+    	catch(InvalidPositionException e){}
+    	catch(NoSuchElementException e){}
+ 
+    	return internos;
+    }
 	
     /**
      * Método privado para conseguir el elemento que va a reemplazar al rótulo de la pregunta eliminada

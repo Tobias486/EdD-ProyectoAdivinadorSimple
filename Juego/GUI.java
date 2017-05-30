@@ -385,11 +385,11 @@ public class GUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String info = ""; //esto se va a imprimir
-				Stack<Position<String>> pilaNodos = logica.pilaInternos();
+				Stack<String> pilaNodos = logica.pilaRotulosInternos();
 
 				while (!pilaNodos.isEmpty()) {
 					try {
-						info = info + pilaNodos.pop().element() + "\n";
+						info = info + pilaNodos.pop() + "\n";
 					} catch (EmptyStackException ex) {}
 				}
 				if (info.equals(""))
